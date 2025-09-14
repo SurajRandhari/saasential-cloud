@@ -3,6 +3,10 @@ import HomeHero from "./HomeHero";
 import HomeAbout from "./HomeAbout";
 import HomeCarasoul from "./HomeCarasoul";
 import SpeakersSection from "./SpeakersSection";
+import { MaskedDivSwiperCarousel } from "./MaskedDivSwiperCarousel";
+import { LogoCarouselDemo } from "./LogoCarouselDemo";
+import ParticleRing from "./ParticleRing";
+import HomeBlog from "./HomeBlog";
 
 export default function Home() {
   return (
@@ -15,6 +19,10 @@ export default function Home() {
         <HomeCarasoul />
       </Suspense>
       <SpeakersSection />
+      <MaskedDivSwiperCarousel />
+      <LogoCarouselDemo />
+      <ParticleRing />
+      <HomeBlog />
     </div>
   );
 }
