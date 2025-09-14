@@ -133,7 +133,7 @@ export default function HomeAbout() {
   return (
     <section
       ref={section2Ref}
-      className="sticky top-30 z-10 flex items-start justify-center performance-section px-10 md:px-36 py-20"
+      className="sticky top-30 z-10 flex items-start justify-center  px-10 md:px-36 py-20"
       style={{ willChange: "opacity" }}
       data-section="home-about" 
     >

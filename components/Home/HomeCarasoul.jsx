@@ -90,8 +90,8 @@ const HomeCarasoul = () => {
   }, []);
 
   return (
-    <section className="sticky top-0 z-20 bg-white flex items-center justify-center performance-section py-20 text-sm font-normal">
-      <div className="w-full gpu-layer">
+    <section className=" z-20 bg-white flex items-center justify-center  py-20 text-sm font-normal">
+      <div className="w-full">
         <Tabs
           value={category}
           onValueChange={handleCategoryChange}
