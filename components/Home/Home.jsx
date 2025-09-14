@@ -7,6 +7,8 @@ import { MaskedDivSwiperCarousel } from "./MaskedDivSwiperCarousel";
 import { LogoCarouselDemo } from "./LogoCarouselDemo";
 import ParticleRing from "./ParticleRing";
 import HomeBlog from "./HomeBlog";
+import { MarqueeDemo } from "./Marquee";
+import RequestDemoMain from "./RequestDemoMain";
 
 export default function Home() {
   return (
@@ -23,6 +25,8 @@ export default function Home() {
       <LogoCarouselDemo />
       <ParticleRing />
       <HomeBlog />
+      <MarqueeDemo />
+      <RequestDemoMain />
     </div>
   );
 }
