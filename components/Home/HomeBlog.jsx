@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { ArrowRight, BookOpen } from 'lucide-react';
 import { getBlogs } from '@/lib/blog';
 import { BlogCard } from '../blogs/BlogCard';
-import { GradientButton } from '../my-button/GradientButton';
+import { GradientButton } from '../common/my-button/GradientButton';
 export const dynamic = "force-dynamic";
 
 export default async function HomeBlog() {

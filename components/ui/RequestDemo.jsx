@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from 'sonner';
 import { ChevronDown, ChevronUp, Send, X } from 'lucide-react';
-import { GradientButton } from '../my-button/GradientButton';
+import { GradientButton } from '../common/my-button/GradientButton';
 
 export default function RequestDemo() {
   const [showForm, setShowForm] = useState(false);

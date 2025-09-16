@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { NavbarDropdowns } from "./NavbarDropdowns";
-import { Menu, MenuItem } from "../ui/navbar-menu";
+import { Menu, MenuItem } from "../../ui/navbar-menu";
 import { GradientButton } from "../my-button/GradientButton";
 
 export  function DesktopNavbar({ active, setActive }) {

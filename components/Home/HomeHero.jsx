@@ -2,8 +2,8 @@
 "use client";
 import React, { useRef, useMemo } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
-import { GradientButton } from "../my-button/GradientButton";
-import { GradientButtonTwo } from "../my-button/GradientButtonTwo";
+import { GradientButton } from "../common/my-button/GradientButton";
+import { GradientButtonTwo } from "../common/my-button/GradientButtonTwo";
 
 // Memoized video component
 const OptimizedVideo = React.memo(({ src, className, ...props }) => (

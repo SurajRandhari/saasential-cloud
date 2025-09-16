@@ -3,7 +3,7 @@ import Image from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import Link from "next/link";
-import { GradientButton } from "./my-button/GradientButton";
+import { GradientButton } from "./common/my-button/GradientButton";
 
 const ProjectCard = ({ project }) => {
   const autoplay = useRef(Autoplay({ delay: 2000, stopOnMouseEnter: true }));

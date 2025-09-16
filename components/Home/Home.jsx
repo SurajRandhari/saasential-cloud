@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <div>
       <HomeHero />
-      <HomeAbout />
+      {/* <HomeAbout /> */}
       <Suspense
         fallback={<div className="h-96 bg-gray-100 animate-pulse rounded" />}
       >

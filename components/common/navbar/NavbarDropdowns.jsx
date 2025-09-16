@@ -1,5 +1,5 @@
 import React from "react";
-import { HoveredLink, MenuItem, ProductItem } from "../ui/navbar-menu";
+import { HoveredLink, MenuItem, ProductItem } from "../../ui/navbar-menu";
 
 export  function NavbarDropdowns({ setActive, active }) {
   return (
