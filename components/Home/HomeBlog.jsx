@@ -1,8 +1,8 @@
-import Link from 'next/link';
-import { ArrowRight, BookOpen } from 'lucide-react';
-import { getBlogs } from '@/lib/blog';
-import { BlogCard } from '../blogs/BlogCard';
-import { GradientButton } from '../common/my-button/GradientButton';
+import Link from "next/link";
+import { ArrowRight, BookOpen } from "lucide-react";
+import { getBlogs } from "@/lib/blog";
+import { BlogCard } from "../blogs/BlogCard";
+import { GradientButton } from "../common/my-button/GradientButton";
 export const dynamic = "force-dynamic";
 
 export default async function HomeBlog() {
@@ -13,8 +13,8 @@ export default async function HomeBlog() {
     const { blogs: fetchedBlogs } = await getBlogs(1, 3); // Fetch latest 3 blogs
     blogs = fetchedBlogs;
   } catch (err) {
-    console.error('Error fetching latest blogs:', err);
-    error = 'Failed to load blog posts';
+    console.error("Error fetching latest blogs:", err);
+    error = "Failed to load blog posts";
   }
 
   if (error) {
@@ -29,7 +29,6 @@ export default async function HomeBlog() {
       </section>
     );
   }
-
 
   if (blogs.length === 0) {
     return (
@@ -57,12 +56,13 @@ export default async function HomeBlog() {
             From Our Blog
           </h2>
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            Stay updated with the latest trends, insights, and best practices in business and technology
+            Stay updated with the latest trends, insights, and best practices in
+            business and technology
           </p>
         </div>
 
         {/* Blog Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12 justify-items-center max-w-6xl mx-auto">
           {blogs.map((blog) => (
             <BlogCard key={blog.id || blog._id} blog={blog} />
           ))}
@@ -71,11 +71,7 @@ export default async function HomeBlog() {
         {/* View All Button - Using your GradientButton */}
         <div className="text-center">
           <Link href="/blogs">
-            <GradientButton 
-              variant="gradient"
-              size="lg"
-              className=" "
-            >
+            <GradientButton variant="gradient" size="lg" className=" ">
               View All Blog Posts
               <ArrowRight className="h-5 w-5 ml-2" />
             </GradientButton>
