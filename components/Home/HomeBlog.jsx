@@ -52,7 +52,7 @@ export default async function HomeBlog() {
             <BookOpen className="h-4 w-4" />
             Latest Insights
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-2xl md:text-4xl font-normal capitalize leading-tight md:leading-[52px] mb-4">
             From Our Blog
           </h2>
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">

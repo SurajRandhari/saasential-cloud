@@ -1,44 +1,58 @@
 import { cn } from "@/lib/utils";
 import { Marquee } from "@/components/magicui/marquee";
+import { ToolCase, ToolCaseIcon } from "lucide-react";
 
 const reviews = [
   {
-    name: "Jack",
-    username: "@jack",
-    body: "I've never seen anything like this before. It's amazing. I love it.",
-    img: "https://prowly-prod.s3.eu-west-1.amazonaws.com/uploads/60169/assets/601039/large-76a270657e9a0d62548da88a48ae0042.png",
+    name: "Semrush",
+    img: "https://logo.clearbit.com/semrush.com",
   },
   {
-    name: "Jill",
-    username: "@jill",
-    body: "I don't know what to say. I'm speechless. This is amazing.",
-    img: "https://prowly-prod.s3.eu-west-1.amazonaws.com/uploads/60169/assets/601039/large-76a270657e9a0d62548da88a48ae0042.png",
+    name: "Ahrefs",
+    img: "https://logo.clearbit.com/ahrefs.com",
   },
   {
-    name: "John",
-    username: "@john",
-    body: "I'm at a loss for words. This is amazing. I love it.",
-    img: "https://avatar.vercel.sh/john",
+    name: "Moz",
+    img: "https://logo.clearbit.com/moz.com",
   },
   {
-    name: "Jane",
-    username: "@jane",
-    body: "I'm at a loss for words. This is amazing. I love it.",
-    img: "https://avatar.vercel.sh/jane",
+    name: "Screaming Frog",
+    img: "https://logo.clearbit.com/screamingfrog.co.uk",
   },
   {
-    name: "Jenny",
-    username: "@jenny",
-    body: "I'm at a loss for words. This is amazing. I love it.",
-    img: "https://avatar.vercel.sh/jenny",
+    name: "Surfer SEO",
+    img: "https://logo.clearbit.com/surferseo.com",
   },
   {
-    name: "James",
-    username: "@james",
-    body: "I'm at a loss for words. This is amazing. I love it.",
-    img: "https://avatar.vercel.sh/james",
+    name: "Google Analytics",
+    img: "https://logo.clearbit.com/marketingplatform.google.com",
+  },
+  {
+    name: "Google Search Console",
+    img: "https://logo.clearbit.com/google.com",
+  },
+  {
+    name: "Yoast SEO",
+    img: "https://logo.clearbit.com/yoast.com",
+  },
+  {
+    name: "Rank Math",
+    img: "https://logo.clearbit.com/rankmath.com",
+  },
+  {
+    name: "SE Ranking",
+    img: "https://logo.clearbit.com/seranking.com",
+  },
+  {
+    name: "Similarweb",
+    img: "https://logo.clearbit.com/similarweb.com",
+  },
+  {
+    name: "Keyword.com",
+    img: "https://logo.clearbit.com/keyword.com",
   },
 ];
+
 
 // Duplicate the data for seamless looping
 const firstRow = [...reviews.slice(0, reviews.length / 2), ...reviews.slice(0, reviews.length / 2)];
@@ -76,12 +90,14 @@ export function MarqueeDemo() {
       {/* Header Section */}
       <div className="flex flex-col items-center justify-center text-center mb-12 px-4">
         {/* Small Section Title */}
-        <p className="text-sm text-gray-600 font-medium mb-4">
-          Our tools
-        </p>
+
+         <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-600 px-4 py-2 rounded-full text-sm font-medium mb-4">
+            <ToolCase className="h-4 w-4" />
+            Our tools
+          </div>
         
         {/* Main Title */}
-        <h2 className="text-2xl md:text-4xl  font-normal font-['Oxanium'] text-gray-800 leading-tight max-w-4xl">
+        <h2 className="text-2xl md:text-4xl font-normal capitalize leading-tight md:leading-[52px]  max-w-4xl">
           We are using
           <br />
           the best-fit tool stack to scale

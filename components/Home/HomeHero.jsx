@@ -42,7 +42,7 @@ export default function HomeHero() {
               Future Ready
             </div>
 
-            <h1 className="text-gray-800 text-2xl sm:text-3xl md:text-4xl font-normal uppercase leading-tight md:leading-[52px] mb-6 md:mb-4 ">
+            <h1 className="text-gray-800 text-2xl md:text-4xl font-normal uppercase leading-tight md:leading-[52px] mb-6 md:mb-4 ">
               Where Business
               <br />
               Meets Innovation -

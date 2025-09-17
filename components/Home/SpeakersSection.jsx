@@ -50,7 +50,7 @@ export default function SpeakersSection() {
             ))}
           </div>
 
-          <h2 className="text-4xl md:text-5xl font-light leading-tight text-center md:text-left">
+          <h2 className="text-2xl md:text-4xl font-normal capitalize leading-tight md:leading-[52px]  text-center md:text-left">
             The Power Behind <br /> the Training!
           </h2>
           <p className="text-gray-600 text-lg max-w-xl w-3/4 text-center md:text-left">
