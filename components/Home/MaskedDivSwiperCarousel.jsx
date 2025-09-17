@@ -66,26 +66,33 @@ export function MaskedDivSwiperCarousel() {
         {[...slidesData, ...slidesData].map((slide, index) => (
           <SwiperSlide key={`${slide.maskType}-${index}`}>
             <MaskedDiv
-              maskType={slide.maskType}
-              size={0.95}
-              className="mx-auto"
-              overlay={
-                <h3 className="text-white text-2xl md:text-3xl font-semibold drop-shadow-lg">
-                  {slide.title}
-                </h3>
-              }
-            >
-              <video 
-                autoPlay 
-                loop 
-                muted 
-                playsInline
-                preload="metadata"
-                loading="lazy"
-              >
-                <source src={slide.videoSrc} type="video/mp4" />
-              </video>
-            </MaskedDiv>
+  maskType={slide.maskType}
+  size={0.95}
+  className="mx-auto relative"
+  overlay={
+    <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+      {/* Gradient scrim */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+      {/* Text */}
+      <h3 className="relative z-10 text-white text-2xl md:text-3xl font-semibold drop-shadow-lg px-4 pb-4">
+        {slide.title}
+      </h3>
+    </div>
+  }
+>
+  <video 
+    autoPlay
+    loop
+    muted
+    playsInline
+    preload="metadata"
+    loading="lazy"
+    className="w-full h-full object-cover"
+  >
+    <source src={slide.videoSrc} type="video/mp4" />
+  </video>
+</MaskedDiv>
+
           </SwiperSlide>
         ))}
       </Swiper>

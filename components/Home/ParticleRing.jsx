@@ -12,7 +12,7 @@ const ParticleRing = () => {
         camera={{
           position: [10, -7.5, -5],
         }}
-        style={{ height: "200px" }}
+        style={{ height: "180px" }}
         className="bg-slate-900"
       >
         <OrbitControls maxDistance={20} minDistance={10} />
@@ -22,7 +22,7 @@ const ParticleRing = () => {
       </Canvas>
 
       <Link href="/contact">
-        <h1 className="absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] text-slate-200 font-medium text-2xl md:text-5xl pointer-events-none cursor-pointer">
+        <h1 className="absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] text-slate-200 font-medium text-2xl md:text-4xl pointer-events-none cursor-pointer">
           Contact Us
         </h1>
       </Link>
