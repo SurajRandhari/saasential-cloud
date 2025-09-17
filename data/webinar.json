@@ -1,0 +1,203 @@
+[
+    {
+      "id": 1,
+      "title": "Logo Design & Brand Guideline",
+      "time": "10:00 AM → 11:30 AM",
+      "date": "Aug 12, 2025",
+      "location": "Online - Zoom",
+      "attendees": ["Suraj", "Alice", "Bob"],
+      "badge": "Live Soon",
+      "desc": "Learn how to create professional logo designs and comprehensive brand guidelines."
+    },
+    {
+      "id": 2,
+      "title": "Graphic Design Masterclass",
+      "time": "2:00 PM → 4:00 PM",
+      "date": "Aug 14, 2025",
+      "location": "Online - Google Meet",
+      "attendees": ["John", "Priya", "Alex"],
+      "badge": "Upcoming",
+      "desc": "A complete course on modern graphic design principles and tools."
+    },
+    {
+      "id": 3,
+      "title": "Diagram & Infographic Creation",
+      "time": "6:00 PM → 7:30 PM",
+      "date": "Aug 16, 2025",
+      "location": "Online - Zoom",
+      "attendees": ["Maya", "Chris", "Ravi"],
+      "badge": "Upcoming",
+      "desc": "Build engaging diagrams and infographics for marketing and data visualization."
+    },
+    {
+      "id": 4,
+      "title": "Motion Graphics & Animation",
+      "time": "9:00 AM → 11:00 AM",
+      "date": "Aug 18, 2025",
+      "location": "Online - Teams",
+      "attendees": ["Sophia", "Ethan", "Liam"],
+      "badge": "Live Soon",
+      "desc": "Hands-on motion graphics training for social media and advertising."
+    },
+    {
+      "id": 5,
+      "title": "Mockup Design Essentials",
+      "time": "3:00 PM → 4:30 PM",
+      "date": "Aug 19, 2025",
+      "location": "Online - Zoom",
+      "attendees": ["Emma", "Raj", "Oliver"],
+      "badge": "Upcoming",
+      "desc": "Learn to create realistic product mockups for client presentations."
+    },
+    {
+      "id": 6,
+      "title": "Editing & VFX Workshop",
+      "time": "4:00 PM → 6:00 PM",
+      "date": "Aug 21, 2025",
+      "location": "Online - Google Meet",
+      "attendees": ["David", "Nina", "Sam"],
+      "badge": "Upcoming",
+      "desc": "Video editing and VFX techniques for professional-grade results."
+    },
+    {
+      "id": 7,
+      "title": "UI & UX Design Principles",
+      "time": "11:00 AM → 12:30 PM",
+      "date": "Aug 23, 2025",
+      "location": "Online - Zoom",
+      "attendees": ["Chris", "Ananya", "Leo"],
+      "badge": "Live Soon",
+      "desc": "Improve user experiences with design thinking and prototyping."
+    },
+    {
+      "id": 8,
+      "title": "Website Design Fundamentals",
+      "time": "5:00 PM → 6:30 PM",
+      "date": "Aug 24, 2025",
+      "location": "Online - Teams",
+      "attendees": ["Zara", "Daniel", "Isha"],
+      "badge": "Upcoming",
+      "desc": "Create visually appealing and responsive website layouts."
+    },
+    {
+      "id": 9,
+      "title": "Mobile Experience Optimization",
+      "time": "1:00 PM → 2:30 PM",
+      "date": "Aug 25, 2025",
+      "location": "Online - Google Meet",
+      "attendees": ["Aditya", "Sophia", "Noah"],
+      "badge": "Upcoming",
+      "desc": "Learn to design for mobile-first experiences."
+    },
+    {
+      "id": 10,
+      "title": "Commerce Experience Strategies",
+      "time": "2:00 PM → 3:30 PM",
+      "date": "Aug 26, 2025",
+      "location": "Online - Zoom",
+      "attendees": ["Evelyn", "Mason", "Lara"],
+      "badge": "Upcoming",
+      "desc": "Boost e-commerce sales through user experience improvements."
+    },
+    {
+      "id": 11,
+      "title": "Human Machine Interface Design",
+      "time": "9:00 AM → 10:30 AM",
+      "date": "Aug 27, 2025",
+      "location": "Online - Teams",
+      "attendees": ["Arjun", "Clara", "Hugo"],
+      "badge": "Live Soon",
+      "desc": "Design intuitive HMIs for various applications."
+    },
+    {
+      "id": 12,
+      "title": "Web Development Bootcamp",
+      "time": "3:00 PM → 5:00 PM",
+      "date": "Aug 28, 2025",
+      "location": "Online - Zoom",
+      "attendees": ["Saanvi", "Oliver", "James"],
+      "badge": "Upcoming",
+      "desc": "Master HTML, CSS, JavaScript, and modern web frameworks."
+    },
+    {
+      "id": 13,
+      "title": "Web-app Development Workshop",
+      "time": "1:00 PM → 2:30 PM",
+      "date": "Aug 29, 2025",
+      "location": "Online - Google Meet",
+      "attendees": ["Nora", "Aarav", "Mila"],
+      "badge": "Upcoming",
+      "desc": "Learn how to build scalable web applications."
+    },
+    {
+      "id": 14,
+      "title": "CMS Customization Training",
+      "time": "4:00 PM → 5:30 PM",
+      "date": "Aug 30, 2025",
+      "location": "Online - Zoom",
+      "attendees": ["Rohan", "Sophie", "Kai"],
+      "badge": "Upcoming",
+      "desc": "Customize WordPress, Drupal, and other content management systems."
+    },
+    {
+      "id": 15,
+      "title": "E-commerce Development Sprint",
+      "time": "2:00 PM → 4:00 PM",
+      "date": "Sep 1, 2025",
+      "location": "Online - Teams",
+      "attendees": ["Isla", "Lucas", "Amir"],
+      "badge": "Live Soon",
+      "desc": "Build and deploy online stores with modern frameworks."
+    },
+    {
+      "id": 16,
+      "title": "Data & Analytics Essentials",
+      "time": "9:00 AM → 11:00 AM",
+      "date": "Sep 2, 2025",
+      "location": "Online - Google Meet",
+      "attendees": ["Fatima", "Omar", "Eli"],
+      "badge": "Upcoming",
+      "desc": "Turn raw data into valuable business insights."
+    },
+    {
+      "id": 17,
+      "title": "Mobile App Development Masterclass",
+      "time": "10:00 AM → 12:00 PM",
+      "date": "Sep 3, 2025",
+      "location": "Online - Zoom",
+      "attendees": ["Eva", "Hassan", "Mateo"],
+      "badge": "Live Soon",
+      "desc": "Create native and cross-platform mobile applications."
+    },
+    {
+      "id": 18,
+      "title": "Quality Assurance & Testing",
+      "time": "3:00 PM → 4:30 PM",
+      "date": "Sep 4, 2025",
+      "location": "Online - Teams",
+      "attendees": ["Mira", "Diego", "Ella"],
+      "badge": "Upcoming",
+      "desc": "Ensure software reliability through QA and automated testing."
+    },
+    {
+      "id": 19,
+      "title": "SEO Best Practices 2025",
+      "time": "11:00 AM → 12:30 PM",
+      "date": "Sep 5, 2025",
+      "location": "Online - Google Meet",
+      "attendees": ["Leo", "Maya", "Ibrahim"],
+      "badge": "Upcoming",
+      "desc": "Optimize websites for higher rankings in search engines."
+    },
+    {
+      "id": 20,
+      "title": "Email Marketing Automation",
+      "time": "1:00 PM → 2:30 PM",
+      "date": "Sep 6, 2025",
+      "location": "Online - Zoom",
+      "attendees": ["Olivia", "Kian", "Zoe"],
+      "badge": "Live Soon",
+      "desc": "Set up and manage automated email campaigns."
+    }
+  ]
+  
