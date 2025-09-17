@@ -19,7 +19,7 @@ export default async function HomeBlog() {
 
   if (error) {
     return (
-      <section className="py-16 ">
+      <section className="py-20">
         <div className="container mx-auto px-4 text-center">
           <div className="text-red-500 mb-4">
             <BookOpen className="h-12 w-12 mx-auto mb-2" />
@@ -32,7 +32,7 @@ export default async function HomeBlog() {
 
   if (blogs.length === 0) {
     return (
-      <section className="py-16 ">
+      <section className="py-20 ">
         <div className="container mx-auto px-4 text-center">
           <div className="text-gray-500 mb-4">
             <BookOpen className="h-12 w-12 mx-auto mb-2" />
@@ -44,7 +44,7 @@ export default async function HomeBlog() {
   }
 
   return (
-    <section className="py-16 ">
+    <section className="py-20 ">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className="text-center mb-12">

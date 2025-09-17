@@ -57,7 +57,7 @@ export function MaskedDivSwiperCarousel() {
   }), []);
 
   return (
-    <div className="max-w-7xl mx-auto my-20 px-4 performance-section">
+    <div className="max-w-7xl mx-auto py-20 px-4 performance-section">
       <Swiper
         {...swiperConfig}
         className="maskedDiv-swiper"

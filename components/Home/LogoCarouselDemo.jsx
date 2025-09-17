@@ -5,7 +5,7 @@ import Link from "next/link"
 
 export function LogoCarouselDemo() {
   return (
-    <div className="space-y-8  py-24">
+    <div className="space-y-8 pb-20">
       <div className="w-full max-w-screen-lg mx-auto flex flex-col items-center space-y-8">
         <div className="text-center">
           <text className="text-2xl md:text-4xl font-normal capitalize leading-tight md:leading-[52px]" >
