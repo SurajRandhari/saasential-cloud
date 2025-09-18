@@ -90,7 +90,7 @@ const HomeCarasoul = () => {
   }, []);
 
   return (
-    <section className=" z-20 bg-white flex items-center justify-center  py-20 text-sm font-normal">
+    <section className=" z-20 bg-white flex items-center justify-center text-sm font-normal pt-[150px]">
       <div className="w-full">
         <Tabs
           value={category}

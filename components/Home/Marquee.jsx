@@ -86,15 +86,12 @@ const ReviewCard = ({ img, name, username, body }) => {
 
 export function MarqueeDemo() {
   return (
-    <div className="relative flex w-full flex-col items-center justify-center overflow-hidden  bg-gradient-to-b from-gray-50/50 to-white">
+    <div className="relative flex w-full flex-col items-center justify-center overflow-hidden  bg-gradient-to-b from-gray-50/50 to-white pt-[150px]">
       {/* Header Section */}
       <div className="flex flex-col items-center justify-center text-center mb-12 px-4">
         {/* Small Section Title */}
 
-         <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-600 px-4 py-2 rounded-full text-sm font-medium mb-4">
-            <ToolCase className="h-4 w-4" />
-            Our tools
-          </div>
+        
         
         {/* Main Title */}
         <h2 className="text-2xl md:text-4xl font-normal capitalize leading-tight md:leading-[52px]  max-w-4xl">

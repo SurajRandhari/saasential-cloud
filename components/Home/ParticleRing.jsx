@@ -7,7 +7,7 @@ import Link from "next/link";
 
 const ParticleRing = () => {
   return (
-    <div className="relative">
+    <div className="relative ">
       <Canvas
         camera={{
           position: [10, -7.5, -5],
@@ -21,8 +21,12 @@ const ParticleRing = () => {
         <PointCircle />
       </Canvas>
 
-      <Link href="/contact">
-        <h1 className="absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] text-slate-200 font-medium text-2xl md:text-4xl pointer-events-none cursor-pointer">
+      {/* Centered clickable text */}
+      <Link
+        href="/contact"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+      >
+        <h1 className="text-slate-200 font-medium text-2xl md:text-4xl cursor-pointer hover:text-blue-400 transition-colors">
           Contact Us
         </h1>
       </Link>
@@ -55,11 +59,9 @@ const Point = ({ position, color }) => {
   return (
     <Sphere position={position} args={[0.1, 10, 10]}>
       <meshStandardMaterial
-        // emissive={color}
         emissive="#0B8AE5"
         emissiveIntensity={0.5}
         roughness={0.5}
-        // color={color}
         color="#0B8AE5"
       />
     </Sphere>

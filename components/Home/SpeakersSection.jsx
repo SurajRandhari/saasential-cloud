@@ -31,7 +31,7 @@ export default function SpeakersSection() {
     </svg>")`;
 
   return (
-    <section className="w-full bg-white py-20 px-4 md:px-40 flex justify-center">
+    <section className="w-full bg-white px-4 md:px-40 flex justify-center pt-[150px]">
       <div className="flex flex-col md:flex-row items-start gap-14">
         
         {/* Left Column */}
@@ -104,7 +104,7 @@ export default function SpeakersSection() {
           </div>
 
           {/* Spinning Text */}
-          <div className="absolute -bottom-20 -right-8 md:-right-20 w-40 h-40 flex items-center justify-center p-6">
+          <div className="absolute -bottom-20 -right-8 w-40 h-40 flex items-center justify-center p-6">
             <SpinningText
               className="text-gray-400 font-semibold text-md uppercase tracking-tight"
               duration={12}

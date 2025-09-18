@@ -19,7 +19,7 @@ export default async function HomeBlog() {
 
   if (error) {
     return (
-      <section className="py-20">
+      <section className="pt-[150px]">
         <div className="container mx-auto px-4 text-center">
           <div className="text-red-500 mb-4">
             <BookOpen className="h-12 w-12 mx-auto mb-2" />
@@ -44,14 +44,11 @@ export default async function HomeBlog() {
   }
 
   return (
-    <section className="py-20 ">
+    <section className="pt-[150px]">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-600 px-4 py-2 rounded-full text-sm font-medium mb-4">
-            <BookOpen className="h-4 w-4" />
-            Latest Insights
-          </div>
+         
           <h2 className="text-2xl md:text-4xl font-normal capitalize leading-tight md:leading-[52px] mb-4">
             From Our Blog
           </h2>
