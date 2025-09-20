@@ -42,7 +42,7 @@ export default function DesignBuildMarket() {
 
   return (
     <section className="relative w-full h-screen bg-black text-white flex flex-col justify-center items-center px-6 text-center overflow-hidden space-y-10">
-      <h1 className="text-4xl md:text-6xl  flex space-x-6">
+      <h1 className="text-6xl  flex flex-col md:flex-row space-x-6">
         {["Design.", "Build.", "Market."].map((word, idx) => (
           <span key={idx} ref={refs[idx]}>
             {word}

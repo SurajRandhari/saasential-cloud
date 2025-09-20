@@ -12,31 +12,35 @@ const impactData = [
 
 export default function OurImpact() {
   return (
-    <section className="w-full py-24 bg-white text-black text-center px-6">
-      
-      <h2 className="text-2xl md:text-4xl font-normal capitalize leading-tight md:leading-[52px]  mb-6">Our Impact</h2>
-      
-      <p className=" text-sm md:text-lg leading-relaxed max-w-3xl mx-auto text-gray-600 mb-12">
-        Every innovation that happens here is out of a quest to get better at what we are already doing.  
-        We deliver ideas that make a difference, create experiences that transform lives and build ecosystems that foster progress.
-      </p>
-      
-      <div className="flex flex-col md:flex-row justify-center items-center gap-12 mb-12">
-        {impactData.map((impact, index) => (
-          <div key={index} className="flex flex-col items-center">
-            <h3 className="text-7xl ">{impact.number}</h3>
-            <p className="text-center text-gray-600 mt-4 max-w-xs">{impact.label}</p>
-          </div>
-        ))}
-      </div>
+    <section className="w-full min-h-screen py-24 bg-white text-black text-center px-6">
+      <div className="flex flex-col items-center justify-center space-y-16">
+        
+        {/* Heading */}
+        <h2 className="text-2xl md:text-6xl font-normal capitalize leading-tight md:leading-[52px]">
+          Our Impact
+        </h2>
 
-      <Link
-        href="#"
-      >
-        <GradientButton>  
-        Our Impact →
-        </GradientButton>
-      </Link>
+        {/* Paragraph */}
+        <p className="text-sm md:text-lg leading-relaxed max-w-3xl mx-auto text-gray-600">
+          Every innovation that happens here is out of a quest to get better at what we are already doing.  
+          We deliver ideas that make a difference, create experiences that transform lives and build ecosystems that foster progress.
+        </p>
+
+        {/* Numbers */}
+        <div className="flex flex-col md:flex-row justify-center items-center gap-12">
+          {impactData.map((impact, index) => (
+            <div key={index} className="flex flex-col items-center">
+              <h3 className="text-7xl">{impact.number}</h3>
+              <p className="text-center text-gray-600 mt-4 max-w-xs">{impact.label}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Button */}
+        <Link href="#">
+          <GradientButton>Our Impact →</GradientButton>
+        </Link>
+      </div>
     </section>
   );
 }
