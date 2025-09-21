@@ -1,16 +1,14 @@
+// app/api/posts/[id]/route.js
 import { NextResponse } from 'next/server'
-import clientPromise from '@/lib/mongodb'
-import { ObjectId } from 'mongodb'
+import { DATABASE_CONFIG } from '@/lib/config'
+import { deletePost, getPostById, updatePost } from '@/lib/services/posts'
+
+const { DB_NAME, COLLECTIONS } = DATABASE_CONFIG
 
 // GET single post
 export async function GET(request, { params }) {
   try {
-    const client = await clientPromise
-    const db = client.db('blog')
-    
-    const post = await db.collection('posts').findOne({
-      _id: new ObjectId(params.id)
-    })
+    const post = await getPostById(params.id)
     
     if (!post) {
       return NextResponse.json({ error: 'Post not found' }, { status: 404 })
@@ -26,24 +24,13 @@ export async function GET(request, { params }) {
 // UPDATE post
 export async function PUT(request, { params }) {
   try {
-    const client = await clientPromise
-    const db = client.db('blog')
-    
     const updateData = await request.json()
     delete updateData._id // Remove _id from update data
     
-    const result = await db.collection('posts').updateOne(
-      { _id: new ObjectId(params.id) },
-      { 
-        $set: {
-          ...updateData,
-          updatedAt: new Date()
-        }
-      }
-    )
+    const result = await updatePost(params.id, updateData)
     
-    if (result.matchedCount === 0) {
-      return NextResponse.json({ error: 'Post not found' }, { status: 404 })
+    if (!result.success) {
+      return NextResponse.json({ error: result.error || 'Post not found' }, { status: 404 })
     }
     
     return NextResponse.json({ 
@@ -56,17 +43,12 @@ export async function PUT(request, { params }) {
   }
 }
 
-// DELETE post (keep existing delete function)
+// DELETE post (updated version)
 export async function DELETE(request, { params }) {
   try {
-    const client = await clientPromise
-    const db = client.db('blog')
+    const result = await deletePost(params.id)
     
-    const result = await db.collection('posts').deleteOne({
-      _id: new ObjectId(params.id)
-    })
-    
-    if (result.deletedCount === 0) {
+    if (!result.success) {
       return NextResponse.json({ error: 'Post not found' }, { status: 404 })
     }
     

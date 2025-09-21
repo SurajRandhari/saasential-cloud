@@ -1,30 +1,24 @@
+// app/api/posts/route.js
 import { NextResponse } from 'next/server'
-import clientPromise from '@/lib/mongodb'
+import { DATABASE_CONFIG } from '@/lib/config'
+import { getAllPosts, createPost } from '@/lib/services/posts'
+
+
+const { DB_NAME, COLLECTIONS } = DATABASE_CONFIG
 
 export async function POST(request) {
   try {
-    const client = await clientPromise
-    const db = client.db('blog')
-    
     const postData = await request.json()
+    const result = await createPost(postData)
     
-    // Add timestamp
-    const post = {
-      ...postData,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    }
-    
-    const result = await db.collection('posts').insertOne(post)
-    
-    if (!result.acknowledged) {
-      return NextResponse.json({ error: 'Failed to create post' }, { status: 500 })
+    if (!result.success) {
+      return NextResponse.json({ error: result.error || 'Failed to create post' }, { status: 500 })
     }
     
     return NextResponse.json({ 
       success: true, 
       message: 'Post created successfully!', 
-      id: result.insertedId 
+      id: result.id 
     })
   } catch (error) {
     console.error('Error creating post:', error)
@@ -34,14 +28,7 @@ export async function POST(request) {
 
 export async function GET() {
   try {
-    const client = await clientPromise
-    const db = client.db('blog')
-    
-    const posts = await db.collection('posts')
-      .find({})
-      .sort({ createdAt: -1 })
-      .toArray()
-    
+    const posts = await getAllPosts()
     return NextResponse.json({ posts })
   } catch (error) {
     console.error('Error fetching posts:', error)
