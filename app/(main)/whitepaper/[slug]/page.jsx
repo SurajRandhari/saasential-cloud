@@ -11,7 +11,7 @@ export default async function WhitepaperLanding({ params }) {
   const wp = await getWhitepaper(params.slug)
   if (!wp) return notFound()
   return (
-    <div className="p-6 grid gap-8 grid-cols-1 lg:grid-cols-3">
+    <div className="mt-24 p-6 grid gap-8 grid-cols-1 lg:grid-cols-3">
       <div className="lg:col-span-2">
         <h1 className="text-3xl font-semibold mb-3">{wp.title}</h1>
         <p className="text-muted-foreground mb-4">{wp.description}</p>

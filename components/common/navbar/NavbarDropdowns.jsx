@@ -44,7 +44,7 @@ export  function NavbarDropdowns({ setActive, active }) {
 
       <MenuItem setActive={setActive} active={active} item="Resources">
         <div className="flex flex-col space-y-4 text-sm">
-          <HoveredLink href="/Whitepaper">Whitepaper</HoveredLink>
+          <HoveredLink href="/whitepaper">Whitepaper</HoveredLink>
           <HoveredLink href="/blogs">Blogs</HoveredLink>
           <HoveredLink href="/webinars">Webinars</HoveredLink>
           <HoveredLink href="/casestudy">Case Study</HoveredLink>
