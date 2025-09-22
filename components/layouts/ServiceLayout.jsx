@@ -4,6 +4,7 @@ import { gsap } from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import FadeOverlay from "@/components/ui/FadeOverlay";
 import Image from "next/image";
+import { GradientButton } from "../common/my-button/GradientButton";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -141,6 +142,8 @@ const ServiceLayout = ({ heroData, servicesData, industriesData, className = "" 
                         ))}
                       </ul>
                     )}
+                    <GradientButton className="mt-4">Read More</GradientButton>
+
                   </div>
                   
                   {/* Image - Right Side */}
@@ -191,7 +194,9 @@ const ServiceLayout = ({ heroData, servicesData, industriesData, className = "" 
                         ))}
                       </ul>
                     )}
+                    <GradientButton className="mt-4">Read More</GradientButton>
                   </div>
+
                 </>
               )}
             </section>
