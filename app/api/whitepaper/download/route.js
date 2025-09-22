@@ -1,7 +1,8 @@
 // app/api/whitepaper/download/route.js
 import { NextResponse } from "next/server"
-import { getWhitepaperById } from "@/services/whitepaper"
+// import { getWhitepaperById } from "@/services/whitepaper"
 import cloudinary from "@/lib/cloudinary"
+import { getWhitepaperById } from "@/lib/services/whitepaper"
 
 export async function GET(req) {
   const url = new URL(req.url)
