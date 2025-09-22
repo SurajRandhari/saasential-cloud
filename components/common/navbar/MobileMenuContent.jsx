@@ -110,7 +110,7 @@ export default function MobileMenuContent({ setIsMobileMenuOpen }) {
         
         {openDropdowns.resources && (
           <div className="pl-4 mt-2 space-y-2 border-l border-gray-300">
-            <Link href="/Whitepaper" className="block text-gray-600 hover:text-black transition-colors py-1" onClick={handleLinkClick}>
+            <Link href="/whitepaper" className="block text-gray-600 hover:text-black transition-colors py-1" onClick={handleLinkClick}>
               Whitepaper
             </Link>
             <Link href="/blogs" className="block text-gray-600 hover:text-black transition-colors py-1" onClick={handleLinkClick}>
@@ -144,7 +144,7 @@ export default function MobileMenuContent({ setIsMobileMenuOpen }) {
             <Link href="/about" className="block text-gray-600 hover:text-black transition-colors py-1" onClick={handleLinkClick}>
               About us
             </Link>
-            <Link href="/careeers" className="block text-gray-600 hover:text-black transition-colors py-1" onClick={handleLinkClick}>
+            <Link href="/careers" className="block text-gray-600 hover:text-black transition-colors py-1" onClick={handleLinkClick}>
               Careers
             </Link>
             <Link href="/contact" className="block text-gray-600 hover:text-black transition-colors py-1" onClick={handleLinkClick}>
