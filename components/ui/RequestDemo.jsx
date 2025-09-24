@@ -71,7 +71,7 @@ export default function RequestDemo() {
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto">
+    <div className="w-full max-w-2xl mx-auto items-center">
       {/* Request Demo Button */}
       <div className="text-center">
        

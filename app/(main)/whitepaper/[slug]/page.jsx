@@ -1,4 +1,5 @@
 // app/whitepaper/[slug]/page.jsx
+import { GradientButton } from "@/components/common/my-button/GradientButton"
 import { listWhitepapers } from "@/lib/services/whitepaper"
 import { notFound } from "next/navigation"
 
@@ -11,10 +12,10 @@ export default async function WhitepaperLanding({ params }) {
   const wp = await getWhitepaper(params.slug)
   if (!wp) return notFound()
   return (
-    <div className="mt-24 p-6 grid gap-8 grid-cols-1 lg:grid-cols-3">
+    <div className="my-28 p-6 grid gap-8 grid-cols-1 lg:grid-cols-3 max-w-7xl mx-auto">
       <div className="lg:col-span-2">
-        <h1 className="text-3xl font-semibold mb-3">{wp.title}</h1>
-        <p className="text-muted-foreground mb-4">{wp.description}</p>
+        <h1 className="text-3xl font-semibold mb-3 ">{wp.title}</h1>
+        <p className="text-muted-foreground mb-4 w-3/4">{wp.description}</p>
         <ul className="list-disc pl-5 space-y-2">
           <li>Actionable insights and key takeaways</li>
           <li>Trends, challenges, and solutions</li>
@@ -36,7 +37,8 @@ export default async function WhitepaperLanding({ params }) {
             <label className="text-sm">Company</label>
             <input name="company" placeholder="Optional" className="border rounded px-3 py-2" />
           </div>
-          <button className="mt-2 px-3 py-2 rounded bg-primary text-primary-foreground">Download Now</button>
+          {/* <button className="mt-2 px-3 py-2 rounded bg-primary text-primary-foreground">Download Now</button> */}
+          <GradientButton type="submit" className="w-fit ">Download Now</GradientButton>
           <p className="text-xs text-muted-foreground">By submitting, consent to receive the download link by email.</p>
         </form>
       </div>

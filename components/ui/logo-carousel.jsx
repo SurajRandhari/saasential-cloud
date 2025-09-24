@@ -60,7 +60,7 @@ const LogoColumn = React.memo(({ logos, index, currentTime }) => {
       <AnimatePresence mode="wait">
         <motion.div
           key={`${currentLogo.id}-${currentIndex}`}
-          className="absolute inset-0 flex items-center justify-center gpu-layer"
+          className="absolute inset-0 flex items-center justify-center gpu-layer border-1"
           initial={{ y: "15%", opacity: 0, filter: "blur(4px)" }}
           animate={{
             y: "0%",
