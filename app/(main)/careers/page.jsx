@@ -24,7 +24,23 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
-import { TextGifHeadingOne } from "@/components/textGif/TextGifDemo";
+import { motion } from "framer-motion"; // ✅ Import Framer Motion
+import { GradientButton } from "@/components/common/my-button/GradientButton";
+import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
+
+// Animation Variants
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.2 }, // animate one by one
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+};
 
 // Mock Job Data
 const jobs = [
@@ -135,63 +151,77 @@ const jobs = [
     ],
   },
 ];
+const MotionAccordionItem = motion(AccordionItem);
 
 export default function Careers() {
   return (
     <div className="w-full h-full flex flex-col">
       {/* Banner */}
-      <section className="banner w-full h-[350px] bg-blue-400 flex items-center justify-center">
-         <div className="mx-auto px-4 py-16 text-center">
-          <TextGifHeadingOne fontSize="6rem">Blogs</TextGifHeadingOne>
-        </div>
+      <section className="banner w-full h-[300px] bg-blue-400 flex items-center justify-center">
+        <h1 className="text-8xl text-white">Careers</h1>
       </section>
 
       {/* Job Openings Accordion */}
-      <section className="w-full max-w-4xl mx-auto py-20">
-        <Accordion type="single" collapsible className="w-full">
-          {jobs.map((job) => (
-            <AccordionItem key={job.id} value={`job-${job.id}`}>
-              <AccordionTrigger className="text-4xl font-semibold">
-                {job.title}
-              </AccordionTrigger>
-              <AccordionContent>
-                <p>
-                  <strong>Experience:</strong> {job.experience}
-                </p>
-                <p>
-                  <strong>Location:</strong> {job.location}
-                </p>
-                <p className="mt-2">
-                  <strong>Summary:</strong> {job.summary}
-                </p>
+      <section className="w-full max-w-4xl mx-auto py-10">
+        <h2 className="text-3xl font-bold mb-6">Job Openings</h2>
 
-                <div className="mt-2">
-                  <strong>Requirements:</strong>
-                  <ul className="list-disc list-inside ml-4">
-                    {job.requirements.map((req, idx) => (
-                      <li key={idx}>{req}</li>
-                    ))}
-                  </ul>
-                </div>
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="w-full"
+        >
+          <Accordion type="single" collapsible className="w-full border-b border-gray-200 rounded-lg divide-y divide-gray-300">
+            {jobs.map((job) => (
+              <motion.div key={job.id} variants={itemVariants}>
 
-                <div className="mt-2">
-                  <strong>Responsibilities:</strong>
-                  <ul className="list-disc list-inside ml-4">
-                    {job.responsibilities.map((res, idx) => (
-                      <li key={idx}>{res}</li>
-                    ))}
-                  </ul>
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
+                  <AccordionItem  key={job.id}  value={`job-${job.id}`}>
+                  <AccordionTrigger className="text-4xl font-semibold">
+                    {job.title}
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <div className="flex justify-between items-center bg-blue-50 border border-blue-200 rounded-md p-3 mb-3">
+                      <p className="font-semibold ">
+                        <strong>Experience:</strong> {job.experience}
+                      </p>
+                      <p className="font-semibold ">
+                        <strong>Location:</strong> {job.location}
+                      </p>
+                    </div>
 
-        {/* Apply Button + Dialog */}
+                    <p className="mt-2">
+                      <strong>Summary:</strong> {job.summary}
+                    </p>
+
+                    <div className="mt-2">
+                      <strong>Requirements:</strong>
+                      <ul className="list-disc list-inside ml-4">
+                        {job.requirements.map((req, idx) => (
+                          <li key={idx}>{req}</li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="mt-2">
+                      <strong>Responsibilities:</strong>
+                      <ul className="list-disc list-inside ml-4">
+                        {job.responsibilities.map((res, idx) => (
+                          <li key={idx}>{res}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              </motion.div>
+            ))}
+          </Accordion>
+        </motion.div>
+
+        {/* Apply Button + Dialog (unchanged except positioning) */}
         <div className="mt-8 flex justify-center">
           <Dialog>
             <DialogTrigger asChild>
-              <Button className="px-6 py-2">Apply Now</Button>
+               <InteractiveHoverButton>Apply Now</InteractiveHoverButton>
             </DialogTrigger>
             <DialogContent className="max-w-lg">
               <DialogHeader>
@@ -244,7 +274,6 @@ export default function Careers() {
                   <Label htmlFor="resume">Resume</Label>
                   <Input id="resume" type="file" accept=".pdf,.doc,.docx" />
                 </div>
-                {/* New Cover Letter Field */}
                 <div>
                   <Label htmlFor="coverLetter">Cover Letter</Label>
                   <textarea
@@ -254,9 +283,12 @@ export default function Careers() {
                     placeholder="Write your cover letter here..."
                   />
                 </div>
-                <Button type="submit" className="w-full">
+                {/* <Button type="submit" className="w-full">
                   Submit Application
-                </Button>
+                </Button> */}
+                <GradientButton className="w-fit">
+                  Submit Application
+                </GradientButton>
               </form>
             </DialogContent>
           </Dialog>
