@@ -17,12 +17,13 @@ const BLANK_SUB = {
   keyPoints: "",
   image: null,
   imageAlt: "",
-  details: ""
+  details: "",
 };
 
 export default function NewServicePage() {
   const router = useRouter();
   const [pending, setPending] = useState(false);
+  const [slugManuallyEdited, setSlugManuallyEdited] = useState(false);
   const [service, setService] = useState({
     name: "",
     slug: "",
@@ -35,7 +36,7 @@ export default function NewServicePage() {
       title: "",
       description: "",
       keywords: "",
-      openGraph: { title: "", description: "", image: null, url: "" }
+      openGraph: { title: "", description: "", image: null, url: "" },
     },
   });
 
@@ -46,7 +47,7 @@ export default function NewServicePage() {
   const addIndustry = () =>
     setService((prev) => ({
       ...prev,
-      industries: [...prev.industries, { name: "", detail: "" }]
+      industries: [...prev.industries, { name: "", detail: "" }],
     }));
 
   const handleIndustryChange = (idx, field, value) => {
@@ -63,7 +64,7 @@ export default function NewServicePage() {
   const addSubservice = () =>
     setService((prev) => ({
       ...prev,
-      subservices: [...prev.subservices, { ...BLANK_SUB }]
+      subservices: [...prev.subservices, { ...BLANK_SUB }],
     }));
 
   const handleSubChange = (idx, field, value) => {
@@ -75,7 +76,7 @@ export default function NewServicePage() {
   const removeSub = (idx) => {
     setService((prev) => ({
       ...prev,
-      subservices: prev.subservices.filter((_, i) => i !== idx)
+      subservices: prev.subservices.filter((_, i) => i !== idx),
     }));
   };
 
@@ -88,8 +89,8 @@ export default function NewServicePage() {
       ...prev,
       seo: {
         ...prev.seo,
-        openGraph: { ...prev.seo.openGraph, image: e.target.files[0] || null }
-      }
+        openGraph: { ...prev.seo.openGraph, image: e.target.files[0] || null },
+      },
     }));
 
   const handleSubFileInput = (idx, e) => {
@@ -106,7 +107,11 @@ export default function NewServicePage() {
       const fd = new FormData();
       fd.append("name", service.name);
       fd.append("slug", service.slug);
-      fd.append("bannerImage", service.bannerImage);
+      // Only append if the bannerImage is a File:
+      if (service.bannerImage instanceof File) {
+        fd.append("bannerImage", service.bannerImage);
+      }
+
       fd.append("title", service.title);
       fd.append("subtitle", service.subtitle);
 
@@ -115,7 +120,10 @@ export default function NewServicePage() {
       fd.append("seoKeywords", service.seo.keywords);
       fd.append("ogTitle", service.seo.openGraph.title);
       fd.append("ogDescription", service.seo.openGraph.description);
-      fd.append("ogImage", service.seo.openGraph.image);
+      // Only append if ogImage is a File:
+      if (service.seo.openGraph.image instanceof File) {
+        fd.append("ogImage", service.seo.openGraph.image);
+      }
       fd.append("ogUrl", service.seo.openGraph.url);
 
       // Industries
@@ -130,7 +138,10 @@ export default function NewServicePage() {
         fd.append(`subservices[${idx}][slug]`, sub.slug);
         fd.append(`subservices[${idx}][description]`, sub.description);
         fd.append(`subservices[${idx}][keyPoints]`, sub.keyPoints);
-        fd.append(`subservices[${idx}][image]`, sub.image);
+        // Only append if image is File:
+        if (sub.image instanceof File) {
+          fd.append(`subservices[${idx}][image]`, sub.image);
+        }
         fd.append(`subservices[${idx}][imageAlt]`, sub.imageAlt);
         fd.append(`subservices[${idx}][details]`, sub.details);
       });
@@ -139,15 +150,43 @@ export default function NewServicePage() {
         method: "POST",
         body: fd,
       });
-      if (!res.ok) throw new Error(await res.text());
+
+      // Always parse text so you can inspect it
+      const resText = await res.text();
+      console.log("Service create response:", res.status, resText);
+
+      if (!res.ok) {
+        toast.error("Failed to create service");
+        setPending(false);
+        return;
+      }
+
       toast.success("Service created!");
       router.push("/admin/services");
-    } catch {
+
+      // if (!res.ok) throw new Error(await res.text());
+      // toast.success("Service created!");
+      // router.push("/admin/services");
+    } catch (err) {
       toast.error("Failed to create service");
-    } finally {
       setPending(false);
     }
+    // finally {
+    //   setPending(false);
+    // }
   };
+
+
+  //automate slug from name if not manually edited
+  function slugify(str) {
+  return str
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, "") // remove invalid chars
+    .replace(/\s+/g, "-") // collapse whitespace and replace by -
+    .replace(/-+/g, "-"); // collapse dashes
+}
+
 
   return (
     <form onSubmit={handleSubmit} className="w-full max-w-5xl mx-auto p-6">
@@ -162,7 +201,12 @@ export default function NewServicePage() {
         >
           <ArrowLeft className="w-4 h-4 mr-2" /> Cancel
         </Button>
-        <Button type="submit" size="sm" disabled={pending} className="ml-auto min-w-[130px]">
+        <Button
+          type="submit"
+          size="sm"
+          disabled={pending}
+          className="ml-auto min-w-[130px]"
+        >
           {pending ? "Saving..." : "Create Service"}
         </Button>
       </div>
@@ -178,34 +222,48 @@ export default function NewServicePage() {
             <Input
               placeholder="Service Name"
               value={service.name}
-              onChange={e => handleChange("name", e.target.value)}
+              // onChange={(e) => handleChange("name", e.target.value)}
+              onChange={(e) => {
+                const name = e.target.value;
+                handleChange("name", name);
+                if (!slugManuallyEdited) {
+                  handleChange("slug", slugify(name));
+                }
+              }}
               name="name"
               required
             />
             <Input
               placeholder="Slug"
               value={service.slug}
-              onChange={e => handleChange("slug", e.target.value)}
+              // onChange={(e) => handleChange("slug", e.target.value)}
+              onChange={(e) => {
+                handleChange("slug", e.target.value);
+                setSlugManuallyEdited(true);
+              }}
               name="slug"
               required
             />
             <div>
               <label className="text-sm font-medium">Banner Image</label>
-              <input type="file" name="bannerImage" accept="image/*"
-                onChange={e => handleFileInput(e, "bannerImage")}
+              <Input
+                type="file"
+                name="bannerImage"
+                accept="image/*"
+                onChange={(e) => handleFileInput(e, "bannerImage")}
                 required
               />
             </div>
             <Input
               placeholder="Page Title"
               value={service.title}
-              onChange={e => handleChange("title", e.target.value)}
+              onChange={(e) => handleChange("title", e.target.value)}
               name="title"
             />
             <Textarea
               placeholder="Subtitle"
               value={service.subtitle}
-              onChange={e => handleChange("subtitle", e.target.value)}
+              onChange={(e) => handleChange("subtitle", e.target.value)}
               name="subtitle"
               rows={2}
             />
@@ -220,65 +278,86 @@ export default function NewServicePage() {
             <Input
               placeholder="SEO Title"
               value={service.seo.title}
-              onChange={e => setService(prev => ({
-                ...prev, seo: { ...prev.seo, title: e.target.value }
-              }))}
+              onChange={(e) =>
+                setService((prev) => ({
+                  ...prev,
+                  seo: { ...prev.seo, title: e.target.value },
+                }))
+              }
             />
             <Textarea
               placeholder="SEO Description"
               value={service.seo.description}
-              onChange={e => setService(prev => ({
-                ...prev, seo: { ...prev.seo, description: e.target.value }
-              }))}
+              onChange={(e) =>
+                setService((prev) => ({
+                  ...prev,
+                  seo: { ...prev.seo, description: e.target.value },
+                }))
+              }
               rows={2}
             />
             <Input
               placeholder="Keywords (comma separated)"
               value={service.seo.keywords}
-              onChange={e => setService(prev => ({
-                ...prev, seo: { ...prev.seo, keywords: e.target.value }
-              }))}
+              onChange={(e) =>
+                setService((prev) => ({
+                  ...prev,
+                  seo: { ...prev.seo, keywords: e.target.value },
+                }))
+              }
             />
             <Separator />
             <Input
               placeholder="OG Title"
               value={service.seo.openGraph.title}
-              onChange={e => setService(prev => ({
-                ...prev,
-                seo: {
-                  ...prev.seo,
-                  openGraph: { ...prev.seo.openGraph, title: e.target.value }
-                }
-              }))}
+              onChange={(e) =>
+                setService((prev) => ({
+                  ...prev,
+                  seo: {
+                    ...prev.seo,
+                    openGraph: { ...prev.seo.openGraph, title: e.target.value },
+                  },
+                }))
+              }
             />
             <Textarea
               placeholder="OG Description"
               value={service.seo.openGraph.description}
-              onChange={e => setService(prev => ({
-                ...prev,
-                seo: {
-                  ...prev.seo,
-                  openGraph: { ...prev.seo.openGraph, description: e.target.value }
-                }
-              }))}
+              onChange={(e) =>
+                setService((prev) => ({
+                  ...prev,
+                  seo: {
+                    ...prev.seo,
+                    openGraph: {
+                      ...prev.seo.openGraph,
+                      description: e.target.value,
+                    },
+                  },
+                }))
+              }
               rows={2}
             />
             <div>
               <label className="text-sm font-medium">OG Image</label>
-              <input type="file" name="ogImage" accept="image/*"
+              <Input
+                type="file"
+                name="ogImage"
+                accept="image/*"
                 onChange={handleOGFileInput}
               />
             </div>
             <Input
               placeholder="OG URL"
               value={service.seo.openGraph.url}
-              onChange={e => setService(prev => ({
-                ...prev,
-                seo: {
-                  ...prev.seo,
-                  openGraph: { ...prev.seo.openGraph, url: e.target.value }
-                }
-              }))}
+              onChange={(e) =>
+                setService((prev) => ({
+                  ...prev,
+                  seo: {
+                    ...prev.seo,
+                    openGraph: { ...prev.seo.openGraph, url: e.target.value },
+                  },
+                }))
+              }
             />
           </CardContent>
         </Card>
@@ -291,14 +370,23 @@ export default function NewServicePage() {
         </CardHeader>
         <CardContent className="space-y-6">
           {service.subservices.length === 0 && (
-            <div className="text-muted-foreground text-sm">No subservices yet.</div>
+            <div className="text-muted-foreground text-sm">
+              No subservices yet.
+            </div>
           )}
           {service.subservices.map((sub, idx) => (
             <Card key={idx} className="bg-gray-50 border-2 border-dashed">
               <CardHeader>
                 <div className="flex justify-between items-center">
-                  <CardTitle className="text-base font-semibold">Subservice {idx + 1}</CardTitle>
-                  <Button type="button" variant="ghost" size="icon" onClick={() => removeSub(idx)}>
+                  <CardTitle className="text-base font-semibold">
+                    Subservice {idx + 1}
+                  </CardTitle>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => removeSub(idx)}
+                  >
                     <Trash2 className="h-4 w-4" />
                   </Button>
                 </div>
@@ -308,50 +396,74 @@ export default function NewServicePage() {
                   <Input
                     placeholder="Subservice Name"
                     value={sub.name}
-                    onChange={e => handleSubChange(idx, "name", e.target.value)}
+                    onChange={(e) =>
+                      handleSubChange(idx, "name", e.target.value)
+                    }
                     required
                   />
                   <Input
                     placeholder="Slug"
                     value={sub.slug}
-                    onChange={e => handleSubChange(idx, "slug", e.target.value)}
+                    onChange={(e) =>
+                      handleSubChange(idx, "slug", e.target.value)
+                    }
                     required
                   />
                 </div>
                 <Textarea
                   placeholder="Short Description"
                   value={sub.description}
-                  onChange={e => handleSubChange(idx, "description", e.target.value)}
+                  onChange={(e) =>
+                    handleSubChange(idx, "description", e.target.value)
+                  }
                   rows={2}
                 />
                 <Textarea
                   placeholder="Key Points (one per line)"
                   value={sub.keyPoints}
-                  onChange={e => handleSubChange(idx, "keyPoints", e.target.value)}
+                  onChange={(e) =>
+                    handleSubChange(idx, "keyPoints", e.target.value)
+                  }
                   rows={3}
                 />
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   <div>
-                    <label className="text-sm font-medium">Subservice Image</label>
-                    <input type="file" accept="image/*" onChange={e => handleSubFileInput(idx, e)} />
+                    <label className="text-sm font-medium">
+                      Subservice Image
+                    </label>
+                    <Input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => handleSubFileInput(idx, e)}
+                    />
                   </div>
-                  <Input
-                    placeholder="Image Alt Text"
-                    value={sub.imageAlt}
-                    onChange={e => handleSubChange(idx, "imageAlt", e.target.value)}
-                  />
+                  <div>
+                    <div className="h-6"></div>
+                    <Input
+                      placeholder="Image Alt Text"
+                      value={sub.imageAlt}
+                      onChange={(e) =>
+                        handleSubChange(idx, "imageAlt", e.target.value)
+                      }
+                    />
+                  </div>
                 </div>
                 <label className="block text-xs text-muted-foreground mb-1">
                   Full Details (rich text)
                 </label>
                 <RichTextEditor
                   content={sub.details}
-                  onChange={val => handleSubChange(idx, "details", val)}
+                  onChange={(val) => handleSubChange(idx, "details", val)}
                 />
               </CardContent>
             </Card>
           ))}
-          <Button type="button" size="sm" variant="secondary" onClick={addSubservice}>
+          <Button
+            type="button"
+            size="sm"
+            variant="secondary"
+            onClick={addSubservice}
+          >
             <Plus className="h-4 w-4 mr-1" /> Add Subservice
           </Button>
         </CardContent>
@@ -363,27 +475,45 @@ export default function NewServicePage() {
           <CardTitle className="text-lg font-bold">Industries</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
-          {service.industries.length === 0 && <div className="text-muted-foreground text-sm">No industries yet.</div>}
+          {service.industries.length === 0 && (
+            <div className="text-muted-foreground text-sm">
+              No industries yet.
+            </div>
+          )}
           {service.industries.map((ind, idx) => (
             <div key={idx} className="flex gap-2 mb-1">
               <Input
                 placeholder="Industry Name"
                 value={ind.name}
-                onChange={e => handleIndustryChange(idx, "name", e.target.value)}
+                onChange={(e) =>
+                  handleIndustryChange(idx, "name", e.target.value)
+                }
                 className="w-2/5"
               />
               <Input
                 placeholder="Detail"
                 value={ind.detail}
-                onChange={e => handleIndustryChange(idx, "detail", e.target.value)}
+                onChange={(e) =>
+                  handleIndustryChange(idx, "detail", e.target.value)
+                }
                 className="flex-1"
               />
-              <Button type="button" variant="ghost" size="icon" onClick={() => removeIndustry(idx)}>
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                onClick={() => removeIndustry(idx)}
+              >
                 <Trash2 className="h-4 w-4" />
               </Button>
             </div>
           ))}
-          <Button type="button" variant="outline" size="sm" onClick={addIndustry}>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={addIndustry}
+          >
             <Plus className="h-4 w-4 mr-1" /> Add Industry
           </Button>
         </CardContent>

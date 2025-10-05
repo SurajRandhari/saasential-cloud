@@ -8,19 +8,25 @@ import { createService } from "@/lib/services/service";
 
 // --- GET: List all services (for your frontend table) ---
 export async function GET() {
-  const client = await clientPromise;
-  const db = client.db(DATABASE_CONFIG.DB_NAME);
-  const services = await db
-    .collection(DATABASE_CONFIG.COLLECTIONS.SERVICES)
-    .find({})
-    .sort({ createdAt: -1 })
-    .toArray();
-  return new Response(JSON.stringify(services), { status: 200 });
+  try {
+    const client = await clientPromise;
+    const db = client.db(DATABASE_CONFIG.DB_NAME);
+    const services = await db
+      .collection(DATABASE_CONFIG.COLLECTIONS.SERVICES)
+      .find({})
+      .sort({ createdAt: -1 })
+      .toArray();
+    return new Response(JSON.stringify(services), { status: 200 });
+  } catch (e) {
+    console.error('GET SERVICES ERROR:', e.message);
+    return NextResponse.json({ error: "Failed to fetch services" }, { status: 500 });
+  }
 }
 
 // --- POST: Create a new service, with images uploaded to Cloudinary ---
 export async function POST(req) {
   try {
+    console.log('🚀 Starting service creation...');
     const form = await req.formData();
 
     // Main fields
@@ -30,9 +36,22 @@ export async function POST(req) {
     const subtitle = String(form.get("subtitle") || "");
     const bannerImageFile = form.get("bannerImage");
 
-    if (!name || !slug || !bannerImageFile) {
-      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+    //! console.log('📝 Basic fields:', { name, slug, title, subtitle });
+    //! console.log('🖼️ Banner image file:', bannerImageFile ? 'File received' : 'No file');
+
+    // Validate required fields
+    if (!name || !slug) {
+      console.log('❌ Missing name or slug');
+      return NextResponse.json({ error: "Missing required fields: name and slug" }, { status: 400 });
     }
+
+    // Validate banner image file
+    if (!bannerImageFile || typeof bannerImageFile !== "object" || !bannerImageFile.size || bannerImageFile.size === 0) {
+      console.log('❌ Invalid banner image file');
+      return NextResponse.json({ error: "Banner image is required and must be a valid file" }, { status: 400 });
+    }
+
+    console.log('✅ Validation passed, uploading banner image...');
 
     // Upload banner image to Cloudinary
     const buf = await fileToBuffer(bannerImageFile);
@@ -41,6 +60,8 @@ export async function POST(req) {
       folder: "services/banner",
       resource_type: "image"
     });
+
+    //! console.log('✅ Banner image uploaded:', bannerRes.secure_url);
 
     // Parse industries
     const industries = [];
@@ -51,6 +72,7 @@ export async function POST(req) {
         detail: form.get(`industries[${i}][detail]`),
       });
     }
+    console.log('📋 Industries parsed:', industries.length);
 
     // Parse SEO & OpenGraph
     const seo = {
@@ -64,9 +86,11 @@ export async function POST(req) {
         url: String(form.get("ogUrl") || ""),
       }
     };
+
     // Upload OpenGraph image if provided
     const ogImageFile = form.get("ogImage");
     if (ogImageFile && typeof ogImageFile === "object" && ogImageFile.size > 0) {
+      console.log('🖼️ Uploading OG image...');
       const buf = await fileToBuffer(ogImageFile);
       const uri = bufferToDataURI(buf, ogImageFile.type || "image/jpeg");
       const ogImgRes = await cloudinary.uploader.upload(uri, {
@@ -74,6 +98,7 @@ export async function POST(req) {
         resource_type: "image"
       });
       seo.openGraph.image = ogImgRes.secure_url;
+      console.log('✅ OG image uploaded:', ogImgRes.secure_url);
     }
 
     // Parse subservices (handle repeated groups)
@@ -89,7 +114,8 @@ export async function POST(req) {
       const subDetails = form.get(`subservices[${i}][details]`);
 
       let subImage = {};
-      if (subImageFile && typeof subImageFile === "object") {
+      if (subImageFile && typeof subImageFile === "object" && subImageFile.size > 0) {
+        console.log(`🖼️ Uploading subservice ${i} image...`);
         const sbuf = await fileToBuffer(subImageFile);
         const suri = bufferToDataURI(sbuf, subImageFile.type || "image/jpeg");
         const subImgRes = await cloudinary.uploader.upload(suri, {
@@ -104,6 +130,7 @@ export async function POST(req) {
           format: subImgRes.format,
           alt: subAlt || "",
         };
+        //! console.log(`✅ Subservice ${i} image uploaded:`, subImgRes.secure_url);
       }
 
       subservices.push({
@@ -116,7 +143,9 @@ export async function POST(req) {
       });
       i++;
     }
+    console.log('📋 Subservices parsed:', subservices.length);
 
+    // Build final document
     const doc = {
       name,
       slug,
@@ -130,15 +159,21 @@ export async function POST(req) {
       title,
       subtitle,
       industries,
-      subservices, // Complete array with image meta!
+      subservices,
       seo,
       createdAt: new Date(),
       updatedAt: new Date(),
     };
 
+    console.log('💾 Saving to database...');
     const { id } = await createService(doc);
+    //! console.log('✅ Service created successfully with ID:', id);
+    
     return NextResponse.json({ ...doc, _id: id }, { status: 201 });
+
   } catch (e) {
+    console.error('💥 SERVICE CREATE ERROR:', e.message);
+    console.error('Stack trace:', e.stack);
     return NextResponse.json({ error: e.message || "Server error" }, { status: 500 });
   }
 }
