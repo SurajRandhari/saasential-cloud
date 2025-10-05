@@ -1,12 +1,14 @@
-// app/services/[slug]/page.jsx
 import ServiceLayout from "@/components/layouts/ServiceLayout";
 import { notFound } from "next/navigation";
 
 export async function generateMetadata({ params }) {
-  const res = await fetch(
-    `${process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://your-domain.com"}/api/services/${params.slug}`,
-    { cache: "no-store" }
-  );
+  // Correctly await params for Next.js 15+
+  const { slug } = await params;
+  const baseUrl =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:3000"
+      : "https://your-domain.com"; // <-- change as needed!
+  const res = await fetch(`${baseUrl}/api/services/${slug}`, { cache: "no-store" });
   if (!res.ok) return {};
   const service = await res.json();
   const seo = service.seo || {};
@@ -22,36 +24,39 @@ export async function generateMetadata({ params }) {
       url: seo.openGraph?.url || "",
     },
     alternates: {
-      canonical: `/services/${params.slug}`,
+      canonical: `/services/${slug}`,
     },
   };
 }
 
-// Use server-side fetching for best SEO & perf
 export default async function ServicePage({ params }) {
-//   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || ''}/api/services/${params.slug}`, { cache: "no-store" });
-  const res = await fetch(`${process.env.NODE_ENV === "development" ? "http://localhost:3000" : ""}/api/services/${params.slug}`, { cache: "no-store" });
-
+  // Correctly await params for Next.js 15+
+  const { slug } = await params;
+  const baseUrl =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:3000"
+      : "https://your-domain.com"; // <-- change as needed!
+  const res = await fetch(`${baseUrl}/api/services/${slug}`, { cache: "no-store" });
   if (!res.ok) return notFound();
   const service = await res.json();
 
-  // Transform your DB object to props expected by ServiceLayout
+  // Prepare props in your expected ServiceLayout format
   const heroData = {
     title: service.title || service.name,
     description: service.subtitle,
-    // ...add fields as needed
+    slug: service.slug,  // so your "Read More" links work!
+    bannerImage: service.bannerImage || null,
   };
-  // Convert subservices to your previous servicesData format
   const servicesData = (service.subservices || []).map(sub => ({
     title: sub.name,
     description: sub.description,
-    bullets: sub.keyPoints,
+    bullets: sub.keyPoints || [],
+    slug: sub.slug,
     image: {
-      src: sub.image?.secure_url || "https://via.placeholder.com/600x800",
+      src: sub.image?.secure_url || "",
       alt: sub.image?.alt || sub.name,
-    },
+    }
   }));
-
   const industriesData = service.industries || [];
 
   return (

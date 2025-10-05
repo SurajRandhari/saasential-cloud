@@ -247,7 +247,7 @@ export default function ServicesPage() {
                         <DropdownMenuItem asChild>
                           <Link
                             href={`/admin/services/${service.slug}/edit`}
-                            className="flex items-center gap-2"
+                            className="flex items-center gap-2 cursor-pointer"
                           >
                             <Edit className="w-4 h-4" />
                             Edit
@@ -255,7 +255,7 @@ export default function ServicesPage() {
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem
-                          className="text-red-600 hover:bg-red-50 flex items-center gap-2"
+                          className="text-red-600 hover:bg-red-50 flex items-center gap-2 cursor-pointer"
                           onClick={() =>
                             handleDeleteClick(service.slug, service.name)
                           }

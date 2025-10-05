@@ -23,7 +23,10 @@ const BLANK_SUB = {
 export default function NewServicePage() {
   const router = useRouter();
   const [pending, setPending] = useState(false);
+
   const [slugManuallyEdited, setSlugManuallyEdited] = useState(false);
+  const [subSlugEdited, setSubSlugEdited] = useState({});
+
   const [service, setService] = useState({
     name: "",
     slug: "",
@@ -67,10 +70,27 @@ export default function NewServicePage() {
       subservices: [...prev.subservices, { ...BLANK_SUB }],
     }));
 
+  // const handleSubChange = (idx, field, value) => {
+  //   const subservices = [...service.subservices];
+  //   subservices[idx][field] = value;
+  //   setService((prev) => ({ ...prev, subservices }));
+  // };
+
   const handleSubChange = (idx, field, value) => {
     const subservices = [...service.subservices];
     subservices[idx][field] = value;
+
+    // On name change, auto-update slug unless slug was manually changed
+    if (field === "name" && !subSlugEdited[idx]) {
+      subservices[idx].slug = slugify(value);
+    }
+
     setService((prev) => ({ ...prev, subservices }));
+
+    // If slug edited, mark manual edit for this subservice
+    if (field === "slug") {
+      setSubSlugEdited((prev) => ({ ...prev, [idx]: true }));
+    }
   };
 
   const removeSub = (idx) => {
@@ -176,17 +196,24 @@ export default function NewServicePage() {
     // }
   };
 
-
   //automate slug from name if not manually edited
   function slugify(str) {
-  return str
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9\s-]/g, "") // remove invalid chars
-    .replace(/\s+/g, "-") // collapse whitespace and replace by -
-    .replace(/-+/g, "-"); // collapse dashes
-}
+    return str
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9\s-]/g, "") // remove invalid chars
+      .replace(/\s+/g, "-") // collapse whitespace and replace by -
+      .replace(/-+/g, "-"); // collapse dashes
+  }
 
+  function slugify(str) {
+    return str
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9\s-]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-");
+  }
 
   return (
     <form onSubmit={handleSubmit} className="w-full max-w-5xl mx-auto p-6">
@@ -393,6 +420,14 @@ export default function NewServicePage() {
               </CardHeader>
               <CardContent className="space-y-2">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                  {/* <Input
+                    placeholder="Subservice Name"
+                    value={sub.name}
+                    onChange={(e) =>
+                      handleSubChange(idx, "name", e.target.value)
+                    }
+                    required
+                  /> */}
                   <Input
                     placeholder="Subservice Name"
                     value={sub.name}
@@ -401,6 +436,14 @@ export default function NewServicePage() {
                     }
                     required
                   />
+                  {/* <Input
+                    placeholder="Slug"
+                    value={sub.slug}
+                    onChange={(e) =>
+                      handleSubChange(idx, "slug", e.target.value)
+                    }
+                    required
+                  /> */}
                   <Input
                     placeholder="Slug"
                     value={sub.slug}
