@@ -9,8 +9,11 @@ import ParticleRing from "./ParticleRing";
 import HomeBlog from "./HomeBlog";
 import { MarqueeDemo } from "./Marquee";
 import RequestDemoMain from "./RequestDemoMain";
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default function Home() {
+  
   return (
     <div>
       <HomeHero />
