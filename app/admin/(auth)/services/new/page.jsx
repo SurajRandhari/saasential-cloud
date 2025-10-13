@@ -30,7 +30,7 @@ export default function NewServicePage() {
   const [service, setService] = useState({
     name: "",
     slug: "",
-    bannerImage: null,
+    // bannerImage: null,
     title: "",
     subtitle: "",
     industries: [],
@@ -70,11 +70,7 @@ export default function NewServicePage() {
       subservices: [...prev.subservices, { ...BLANK_SUB }],
     }));
 
-  // const handleSubChange = (idx, field, value) => {
-  //   const subservices = [...service.subservices];
-  //   subservices[idx][field] = value;
-  //   setService((prev) => ({ ...prev, subservices }));
-  // };
+
 
   const handleSubChange = (idx, field, value) => {
     const subservices = [...service.subservices];
@@ -101,8 +97,8 @@ export default function NewServicePage() {
   };
 
   // Handle file inputs
-  const handleFileInput = (e, field) =>
-    setService((prev) => ({ ...prev, [field]: e.target.files[0] || null }));
+  // const handleFileInput = (e, field) =>
+  //   setService((prev) => ({ ...prev, [field]: e.target.files[0] || null }));
 
   const handleOGFileInput = (e) =>
     setService((prev) => ({
@@ -128,9 +124,9 @@ export default function NewServicePage() {
       fd.append("name", service.name);
       fd.append("slug", service.slug);
       // Only append if the bannerImage is a File:
-      if (service.bannerImage instanceof File) {
-        fd.append("bannerImage", service.bannerImage);
-      }
+      // if (service.bannerImage instanceof File) {
+      //   fd.append("bannerImage", service.bannerImage);
+      // }
 
       fd.append("title", service.title);
       fd.append("subtitle", service.subtitle);
@@ -206,14 +202,7 @@ export default function NewServicePage() {
       .replace(/-+/g, "-"); // collapse dashes
   }
 
-  function slugify(str) {
-    return str
-      .toLowerCase()
-      .trim()
-      .replace(/[^a-z0-9\s-]/g, "")
-      .replace(/\s+/g, "-")
-      .replace(/-+/g, "-");
-  }
+  
 
   return (
     <form onSubmit={handleSubmit} className="w-full max-w-5xl mx-auto p-6">
@@ -249,7 +238,6 @@ export default function NewServicePage() {
             <Input
               placeholder="Service Name"
               value={service.name}
-              // onChange={(e) => handleChange("name", e.target.value)}
               onChange={(e) => {
                 const name = e.target.value;
                 handleChange("name", name);
@@ -263,7 +251,6 @@ export default function NewServicePage() {
             <Input
               placeholder="Slug"
               value={service.slug}
-              // onChange={(e) => handleChange("slug", e.target.value)}
               onChange={(e) => {
                 handleChange("slug", e.target.value);
                 setSlugManuallyEdited(true);
@@ -271,7 +258,7 @@ export default function NewServicePage() {
               name="slug"
               required
             />
-            <div>
+            {/* <div>
               <label className="text-sm font-medium">Banner Image</label>
               <Input
                 type="file"
@@ -280,7 +267,7 @@ export default function NewServicePage() {
                 onChange={(e) => handleFileInput(e, "bannerImage")}
                 required
               />
-            </div>
+            </div> */}
             <Input
               placeholder="Page Title"
               value={service.title}
@@ -420,14 +407,7 @@ export default function NewServicePage() {
               </CardHeader>
               <CardContent className="space-y-2">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                  {/* <Input
-                    placeholder="Subservice Name"
-                    value={sub.name}
-                    onChange={(e) =>
-                      handleSubChange(idx, "name", e.target.value)
-                    }
-                    required
-                  /> */}
+                 
                   <Input
                     placeholder="Subservice Name"
                     value={sub.name}
@@ -436,14 +416,7 @@ export default function NewServicePage() {
                     }
                     required
                   />
-                  {/* <Input
-                    placeholder="Slug"
-                    value={sub.slug}
-                    onChange={(e) =>
-                      handleSubChange(idx, "slug", e.target.value)
-                    }
-                    required
-                  /> */}
+                 
                   <Input
                     placeholder="Slug"
                     value={sub.slug}

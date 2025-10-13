@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -28,7 +28,7 @@ export default function EditServicePage() {
   const [service, setService] = useState({
     name: "",
     slug: "",
-    bannerImage: null, // will use a file for new uploads, or URL for existing
+    // ❌ REMOVED: bannerImage: null,
     title: "",
     subtitle: "",
     industries: [],
@@ -52,8 +52,7 @@ export default function EditServicePage() {
         setService({
           name: data.name || "",
           slug: data.slug || "",
-          // We store the URL/metadata for existing images, allow file input to replace
-          bannerImage: data.bannerImage || null,
+          // ❌ REMOVED: bannerImage: data.bannerImage || null,
           title: data.title || "",
           subtitle: data.subtitle || "",
           industries: data.industries || [],
@@ -62,10 +61,10 @@ export default function EditServicePage() {
             slug: sub.slug || "",
             description: sub.description || "",
             keyPoints: (sub.keyPoints || []).join("\n"),
-            image: null, // new file for replacement only!
+            image: null,
             imageAlt: sub.image?.alt || "",
             details: sub.details || "",
-            currentImage: sub.image?.secure_url || "", // For preview
+            currentImage: sub.image?.secure_url || "",
           })),
           seo: {
             title: data.seo?.title || "",
@@ -149,8 +148,7 @@ export default function EditServicePage() {
     }));
 
   // File handlers
-  const handleBannerFile = (e) =>
-    setService((prev) => ({ ...prev, bannerImage: e.target.files[0] }));
+  // ❌ REMOVED: const handleBannerFile = (e) => ...
 
   const handleOGFile = (e) =>
     setService((prev) => ({
@@ -175,8 +173,9 @@ export default function EditServicePage() {
       const fd = new FormData();
       fd.append("name", service.name);
       fd.append("slug", service.slug);
-      if (service.bannerImage instanceof File)
-        fd.append("bannerImage", service.bannerImage);
+      // ❌ REMOVED: Banner image FormData append
+      // if (service.bannerImage instanceof File)
+      //   fd.append("bannerImage", service.bannerImage);
       fd.append("title", service.title);
       fd.append("subtitle", service.subtitle);
 
@@ -238,7 +237,7 @@ export default function EditServicePage() {
           {isSaving ? "Saving..." : "Update Service"}
         </Button>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         {/* Service Overview */}
         <Card>
           <CardHeader>
@@ -252,7 +251,8 @@ export default function EditServicePage() {
               required
             />
             <Input placeholder="Slug" value={service.slug} disabled />
-            <div>
+            {/* ❌ REMOVED: Banner Image input field */}
+            {/* <div>
               <label className="text-sm font-medium">Banner Image</label>
               <Input type="file" accept="image/*" onChange={handleBannerFile} />
               {service.bannerImage &&
@@ -263,7 +263,7 @@ export default function EditServicePage() {
                     className="h-20 my-2 rounded border"
                   />
                 )}
-            </div>
+            </div> */}
             <Input
               placeholder="Page Title"
               value={service.title}

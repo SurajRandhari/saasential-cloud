@@ -34,7 +34,7 @@ export async function POST(req) {
     const slug = String(form.get("slug") || "");
     const title = String(form.get("title") || "");
     const subtitle = String(form.get("subtitle") || "");
-    const bannerImageFile = form.get("bannerImage");
+    // const bannerImageFile = form.get("bannerImage");
 
     //! console.log('📝 Basic fields:', { name, slug, title, subtitle });
     //! console.log('🖼️ Banner image file:', bannerImageFile ? 'File received' : 'No file');
@@ -46,20 +46,20 @@ export async function POST(req) {
     }
 
     // Validate banner image file
-    if (!bannerImageFile || typeof bannerImageFile !== "object" || !bannerImageFile.size || bannerImageFile.size === 0) {
-      console.log('❌ Invalid banner image file');
-      return NextResponse.json({ error: "Banner image is required and must be a valid file" }, { status: 400 });
-    }
+    // if (!bannerImageFile || typeof bannerImageFile !== "object" || !bannerImageFile.size || bannerImageFile.size === 0) {
+    //   console.log('❌ Invalid banner image file');
+    //   return NextResponse.json({ error: "Banner image is required and must be a valid file" }, { status: 400 });
+    // }
 
-    console.log('✅ Validation passed, uploading banner image...');
+    // console.log('✅ Validation passed, uploading banner image...');
 
-    // Upload banner image to Cloudinary
-    const buf = await fileToBuffer(bannerImageFile);
-    const uri = bufferToDataURI(buf, bannerImageFile.type || "image/jpeg");
-    const bannerRes = await cloudinary.uploader.upload(uri, {
-      folder: "services/banner",
-      resource_type: "image"
-    });
+    // // Upload banner image to Cloudinary
+    // const buf = await fileToBuffer(bannerImageFile);
+    // const uri = bufferToDataURI(buf, bannerImageFile.type || "image/jpeg");
+    // const bannerRes = await cloudinary.uploader.upload(uri, {
+    //   folder: "services/banner",
+    //   resource_type: "image"
+    // });
 
     //! console.log('✅ Banner image uploaded:', bannerRes.secure_url);
 
@@ -149,13 +149,13 @@ export async function POST(req) {
     const doc = {
       name,
       slug,
-      bannerImage: {
-        public_id: bannerRes.public_id,
-        secure_url: bannerRes.secure_url,
-        width: bannerRes.width,
-        height: bannerRes.height,
-        format: bannerRes.format,
-      },
+      // bannerImage: {
+      //   public_id: bannerRes.public_id,
+      //   secure_url: bannerRes.secure_url,
+      //   width: bannerRes.width,
+      //   height: bannerRes.height,
+      //   format: bannerRes.format,
+      // },
       title,
       subtitle,
       industries,
