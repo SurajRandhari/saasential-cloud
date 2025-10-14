@@ -5,7 +5,6 @@ import HomeCarasoul from "./HomeCarasoul";
 import SpeakersSection from "./SpeakersSection";
 import { MaskedDivSwiperCarousel } from "./MaskedDivSwiperCarousel";
 import { LogoCarouselDemo } from "./LogoCarouselDemo";
-import ParticleRing from "./ParticleRing";
 import HomeBlog from "./HomeBlog";
 import { MarqueeDemo } from "./Marquee";
 import RequestDemoMain from "./RequestDemoMain";
@@ -26,7 +25,6 @@ export default function Home() {
       <SpeakersSection />
       <MaskedDivSwiperCarousel />
       <LogoCarouselDemo />
-      <ParticleRing />
       <HomeBlog />
       <MarqueeDemo />
       <RequestDemoMain />
