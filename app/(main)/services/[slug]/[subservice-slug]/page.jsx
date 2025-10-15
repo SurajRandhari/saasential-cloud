@@ -17,7 +17,7 @@ export default async function SubservicePage({ params }) {
   if (!sub) return notFound();
 
   return (
-    <main className="max-w-3xl mx-auto px-4 py-12">
+    <main className="max-w-3xl mx-auto px-4 py-12 mt-22">
       {/* Banner */}
       {sub.image?.secure_url && (
         <img

@@ -1,15 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { HoveredLink, MenuItem, ProductItem } from "../../ui/navbar-menu";
 
 export  function NavbarDropdowns({ setActive, active }) {
+   const [services, setServices] = useState([]);
+
+   useEffect(() => {
+    async function fetchServices() {
+      const res = await fetch('/api/services');
+      if (res.ok) {
+        const data = await res.json();
+        setServices(data); // Array of { name, slug, ... }
+      }
+    }
+    fetchServices();
+  }, []);
+
   return (
     <>
       <MenuItem setActive={setActive} active={active} item="Services">
         <div className="flex flex-col space-y-4 text-sm">
-          <HoveredLink href="/services/branding">Branding</HoveredLink>
-          <HoveredLink href="/services/experience-design">Experience Design</HoveredLink>
-          <HoveredLink href="/services/technologies">Technologies</HoveredLink>
-          <HoveredLink href="/services/marketing">Marketing</HoveredLink>
+          {services.length === 0 
+            ? <span className="text-xs text-muted-foreground">Loading...</span>
+            : services.map(service => (
+                <HoveredLink 
+                  key={service._id || service.slug} 
+                  href={`/services/${service.slug}`}>
+                  {service.name}
+                </HoveredLink>
+              ))
+          }
         </div>
       </MenuItem>
 
