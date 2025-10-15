@@ -1,9 +1,10 @@
 "use client";
+
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 
-// Utility function to randomly shuffle an array
+// Utility: Shuffle array once
 const shuffleArray = (array) => {
   const shuffled = [...array];
   for (let i = shuffled.length - 1; i > 0; i--) {
@@ -13,76 +14,71 @@ const shuffleArray = (array) => {
   return shuffled;
 };
 
-// Utility function to distribute logos across multiple columns
+// Utility: Distribute logos evenly
 const distributeLogos = (allLogos, columnCount) => {
   const shuffled = shuffleArray(allLogos);
   const columns = Array.from({ length: columnCount }, () => []);
-
-  // Distribute logos evenly across columns
+  
   shuffled.forEach((logo, index) => {
     columns[index % columnCount].push(logo);
   });
-
-  // Ensure all columns have the same number of logos
-  const maxLength = Math.max(...columns.map((col) => col.length));
-  columns.forEach((col) => {
-    while (col.length < maxLength) {
-      col.push(shuffled[Math.floor(Math.random() * shuffled.length)]);
-    }
-  });
-
+  
   return columns;
 };
 
-// LogoColumn component: Displays a single column of animated logos
-const LogoColumn = React.memo(({ logos, index, currentTime }) => {
-  const cycleInterval = 2500; // Increased for better UX
-  const columnDelay = index * 300; // Increased stagger
-  
-  // Calculate which logo should be displayed
-  const adjustedTime = (currentTime + columnDelay) % (cycleInterval * logos.length);
-  const currentIndex = Math.floor(adjustedTime / cycleInterval);
+// Optimized LogoColumn - No blur, simpler animations
+const LogoColumn = React.memo(({ logos, columnIndex }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const cycleInterval = 2500; // 2.5 seconds per logo
 
-  // Memoize the current logo
-  const currentLogo = useMemo(() => logos[currentIndex], [logos, currentIndex]);
+  useEffect(() => {
+    // Stagger start time per column
+    const startDelay = columnIndex * 400;
+    
+    const timer = setTimeout(() => {
+      const interval = setInterval(() => {
+        setCurrentIndex((prev) => (prev + 1) % logos.length);
+      }, cycleInterval);
+      
+      return () => clearInterval(interval);
+    }, startDelay);
+
+    return () => clearTimeout(timer);
+  }, [logos.length, columnIndex, cycleInterval]);
+
+  const currentLogo = logos[currentIndex];
 
   return (
     <motion.div
-      className="w-24 h-14 md:w-48 md:h-24 overflow-hidden relative performance-section"
-      initial={{ opacity: 0, y: 50 }}
+      className="w-24 h-14 md:w-48 md:h-24 overflow-hidden relative flex items-center justify-center rounded-lg border border-gray-100"
+      initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{
-        delay: index * 0.15,
-        duration: 0.6,
+        delay: columnIndex * 0.15,
+        duration: 0.5,
         ease: "easeOut",
       }}
     >
       <AnimatePresence mode="wait">
         <motion.div
           key={`${currentLogo.id}-${currentIndex}`}
-          className="absolute inset-0 flex items-center justify-center gpu-layer border-1"
-          initial={{ y: "15%", opacity: 0, filter: "blur(4px)" }}
-          animate={{
-            y: "0%",
-            opacity: 1,
-            filter: "blur(0px)",
+          className="absolute inset-0 flex items-center justify-center p-4"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ 
+            opacity: 1, 
+            y: 0,
             transition: {
-              type: "spring",
-              stiffness: 200,
-              damping: 25,
-              mass: 1,
               duration: 0.4,
-            },
+              ease: "easeOut"
+            }
           }}
-          exit={{
-            y: "-15%",
-            opacity: 0,
-            filter: "blur(2px)",
+          exit={{ 
+            opacity: 0, 
+            y: -10,
             transition: {
-              type: "tween",
-              ease: "easeIn",
-              duration: 0.25,
-            },
+              duration: 0.3,
+              ease: "easeIn"
+            }
           }}
         >
           <Image
@@ -90,10 +86,9 @@ const LogoColumn = React.memo(({ logos, index, currentTime }) => {
             alt={currentLogo.name}
             width={128}
             height={128}
-            className="w-20 h-20 md:w-32 md:h-32 max-w-[80%] max-h-[80%] object-contain"
-            priority={index === 0 && currentIndex === 0} // Prioritize first visible logo
-            loading={index === 0 && currentIndex === 0 ? "eager" : "lazy"}
-            sizes="(max-width: 768px) 80px, 128px"
+            className="w-full h-full object-contain"
+            loading={columnIndex === 0 && currentIndex === 0 ? "eager" : "lazy"}
+            sizes="(max-width: 768px) 96px, 160px"
           />
         </motion.div>
       </AnimatePresence>
@@ -101,63 +96,44 @@ const LogoColumn = React.memo(({ logos, index, currentTime }) => {
   );
 });
 
-// Set display name for better debugging
 LogoColumn.displayName = "LogoColumn";
 
-// Main LogoCarousel component
-function LogoCarousel({ columnCount = 3 }) {
-  const [logoSets, setLogoSets] = useState([]);
-  const [currentTime, setCurrentTime] = useState(0);
+// Main LogoCarousel component - Optimized
+export default function LogoCarousel({ columnCount = 3 }) {
+  // Memoized logos array
+  const allLogos = useMemo(
+    () => [
+      { name: "Apple", id: 1, src: "/images/clients-logos/1.png" },
+      { name: "Supabase", id: 2, src: "/images/clients-logos/2.png" },
+      { name: "Vercel", id: 3, src: "/images/clients-logos/3.png" },
+      { name: "Lowes", id: 4, src: "/images/clients-logos/4.png" },
+      { name: "Ally", id: 5, src: "/images/clients-logos/5.png" },
+      { name: "Pierre", id: 6, src: "/images/clients-logos/6.png" },
+      { name: "BMW", id: 7, src: "/images/clients-logos/7.png" },
+      { name: "Claude", id: 8, src: "/images/clients-logos/1.png" },
+      { name: "Next.js", id: 9, src: "/images/clients-logos/2.png" },
+      { name: "Tailwind CSS", id: 10, src: "/images/clients-logos/3.png" },
+      { name: "Upstash", id: 11, src: "/images/clients-logos/4.png" },
+      { name: "TypeScript", id: 12, src: "/images/clients-logos/5.png" },
+      { name: "Stripe", id: 13, src: "/images/clients-logos/6.png" },
+      { name: "OpenAI", id: 14, src: "/images/clients-logos/7.png" },
+    ],
+    []
+  );
 
-  // Fixed: Memoized array of logos with correct paths (leading slash)
-  const allLogos = useMemo(() => [
-    { name: "Apple", id: 1, src: "/images/clients-logos/1.png" },
-    { name: "Supabase", id: 2, src: "/images/clients-logos/2.png" },
-    { name: "Vercel", id: 3, src: "/images/clients-logos/3.png" },
-    { name: "Lowes", id: 4, src: "/images/clients-logos/4.png" },
-    { name: "Ally", id: 5, src: "/images/clients-logos/5.png" },
-    { name: "Pierre", id: 6, src: "/images/clients-logos/6.png" },
-    { name: "BMW", id: 7, src: "/images/clients-logos/7.png" },
-    { name: "Claude", id: 8, src: "/images/clients-logos/1.png" },
-    { name: "Next.js", id: 9, src: "/images/clients-logos/2.png" },
-    { name: "Tailwind CSS", id: 10, src: "/images/clients-logos/3.png" },
-    { name: "Upstash", id: 11, src: "/images/clients-logos/4.png" },
-    { name: "TypeScript", id: 12, src: "/images/clients-logos/5.png" },
-    { name: "Stripe", id: 13, src: "/images/clients-logos/6.png" },
-    { name: "OpenAI", id: 14, src: "/images/clients-logos/7.png" },
-  ], []);
+  // Distribute logos once on mount
+  const logoColumns = useMemo(
+    () => distributeLogos(allLogos, columnCount),
+    [allLogos, columnCount]
+  );
 
-  // Distribute logos across columns when component mounts
-  useEffect(() => {
-    const distributedLogos = distributeLogos(allLogos, columnCount);
-    setLogoSets(distributedLogos);
-  }, [allLogos, columnCount]);
-
-  // Optimized time update function
-  const updateTime = useCallback(() => {
-    setCurrentTime((prevTime) => prevTime + 150); // Slightly slower for smoother animation
-  }, []);
-
-  // Set up interval with cleanup
-  useEffect(() => {
-    const intervalId = setInterval(updateTime, 150);
-    return () => clearInterval(intervalId);
-  }, [updateTime]);
-
-  // Render the logo columns
   return (
-    <div className="flex space-x-4 justify-center items-center performance-section">
-      {logoSets.map((logos, index) => (
-        <LogoColumn 
-          key={`column-${index}`} 
-          logos={logos} 
-          index={index} 
-          currentTime={currentTime} 
-        />
+    <div className="flex gap-6 md:gap-8 justify-center items-center">
+      {logoColumns.map((logos, index) => (
+        <LogoColumn key={`column-${index}`} logos={logos} columnIndex={index} />
       ))}
     </div>
   );
 }
 
 export { LogoCarousel };
-export default LogoCarousel;
