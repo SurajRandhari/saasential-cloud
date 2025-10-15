@@ -1,17 +1,23 @@
 import ServiceLayout from "@/components/layouts/ServiceLayout";
 import { notFound } from "next/navigation";
 
+// Helper: SSR-safe absolute API url for Vercel/local
+function getApiUrl(slug) {
+  if (process.env.NODE_ENV === "development") {
+    return `http://localhost:3000/api/services/${slug}`;
+  }
+  // Vercel sets VERCEL_URL automatically in prod
+  const vercelUrl = process.env.VERCEL_URL || "saasential-cloud.vercel.app";
+  return `https://${vercelUrl}/api/services/${slug}`;
+}
+
 export async function generateMetadata({ params }) {
-  // Correctly await params for Next.js 15+
   const { slug } = await params;
-  const baseUrl =
-    process.env.NODE_ENV === "development"
-      ? "http://localhost:3000"
-      : "https://your-domain.com"; // <-- change as needed!
-  const res = await fetch(`${baseUrl}/api/services/${slug}`, { cache: "no-store" });
+  const apiUrl = getApiUrl(slug);
+  const res = await fetch(apiUrl, { cache: "no-store" });
   if (!res.ok) return {};
   const service = await res.json();
-  const seo = service.seo || {};
+  const seo = service?.seo || {};
 
   return {
     title: seo.title || service.title || service.name,
@@ -30,34 +36,38 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function ServicePage({ params }) {
-  // Correctly await params for Next.js 15+
   const { slug } = await params;
-  const baseUrl =
-    process.env.NODE_ENV === "development"
-      ? "http://localhost:3000"
-      : "https://your-domain.com"; // <-- change as needed!
-  const res = await fetch(`${baseUrl}/api/services/${slug}`, { cache: "no-store" });
-  if (!res.ok) return notFound();
+  const apiUrl = getApiUrl(slug);
+  const res = await fetch(apiUrl, { cache: "no-store" });
+  if (!res.ok) {
+    console.error(`Service not found for slug: ${slug}`);
+    return notFound();
+  }
   const service = await res.json();
+  if (!service) return notFound();
 
-  // Prepare props in your expected ServiceLayout format
+  // Defensive checks for service props
   const heroData = {
-    title: service.title || service.name,
-    description: service.subtitle,
-    slug: service.slug,  // so your "Read More" links work!
+    title: service.title || service.name || "",
+    description: service.subtitle || "",
+    slug: service.slug || slug,
     bannerImage: service.bannerImage || null,
   };
-  const servicesData = (service.subservices || []).map(sub => ({
-    title: sub.name,
-    description: sub.description,
-    bullets: sub.keyPoints || [],
-    slug: sub.slug,
-    image: {
-      src: sub.image?.secure_url || "",
-      alt: sub.image?.alt || sub.name,
-    }
-  }));
-  const industriesData = service.industries || [];
+  const servicesData = Array.isArray(service.subservices)
+    ? service.subservices.map(sub => ({
+        title: sub.name || "",
+        description: sub.description || "",
+        bullets: sub.keyPoints || [],
+        slug: sub.slug || "",
+        image: {
+          src: sub.image?.secure_url || "",
+          alt: sub.image?.alt || sub.name || "",
+        },
+      }))
+    : [];
+  const industriesData = Array.isArray(service.industries)
+    ? service.industries
+    : [];
 
   return (
     <ServiceLayout

@@ -1,33 +1,4 @@
-// import clientPromise from '@/lib/mongodb'
-// import { DATABASE_CONFIG } from '@/lib/config'
-
-// export async function GET(request, { params }) {
-//   const { slug } = params;
-//   const client = await clientPromise;
-//   const db = client.db(DATABASE_CONFIG.DB_NAME);
-//   const service = await db.collection(DATABASE_CONFIG.COLLECTIONS.SERVICES).findOne({ slug });
-//   if (!service) return new Response('Not found', { status: 404 });
-//   return new Response(JSON.stringify(service), { status: 200 });
-// }
-
-// export async function PUT(request, { params }) {
-//   const { slug } = params;
-//   const data = await request.json();
-//   const client = await clientPromise;
-//   const db = client.db(DATABASE_CONFIG.DB_NAME);
-//   const result = await db.collection(DATABASE_CONFIG.COLLECTIONS.SERVICES).updateOne({ slug }, { $set: data });
-//   if (result.matchedCount === 0) return new Response('Not found', { status: 404 });
-//   return new Response(JSON.stringify(result), { status: 200 });
-// }
-
-// export async function DELETE(request, { params }) {
-//   const { slug } = params;
-//   const client = await clientPromise;
-//   const db = client.db(DATABASE_CONFIG.DB_NAME);
-//   const result = await db.collection(DATABASE_CONFIG.COLLECTIONS.SERVICES).deleteOne({ slug });
-//   if (result.deletedCount === 0) return new Response('Not found', { status: 404 });
-//   return new Response(null, { status: 204 });
-// }
+// app/api/services/[slug]/route.js
 
 
 import { NextResponse } from "next/server";
