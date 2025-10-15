@@ -3,24 +3,26 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Calendar, Clock } from "lucide-react";
+import { InteractiveHoverButton } from "../ui/interactive-hover-button";
 
 export function BlogCard({ blog }) {
   // Function to strip HTML tags and limit to 30 words
   const getPlainTextDescription = (htmlContent, wordLimit = 30) => {
-    if (!htmlContent) return '';
-    
+    if (!htmlContent) return "";
+
     // Remove HTML tags
-    const plainText = htmlContent.replace(/<[^>]*>/g, ' ');
+    const plainText = htmlContent.replace(/<[^>]*>/g, " ");
     // Clean up extra spaces
-    const cleanText = plainText.replace(/\s+/g, ' ').trim();
+    const cleanText = plainText.replace(/\s+/g, " ").trim();
     // Split into words and limit to specified number
-    const words = cleanText.split(' ').slice(0, wordLimit);
-    return words.join(' ') + (cleanText.split(' ').length > wordLimit ? '...' : '');
+    const words = cleanText.split(" ").slice(0, wordLimit);
+    return (
+      words.join(" ") + (cleanText.split(" ").length > wordLimit ? "..." : "")
+    );
   };
 
   return (
     <div className="bg-gray-50 relative dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-[320px] h-[420px] sm:w-[350px] sm:h-[420px] border flex flex-col">
-      
       {/* Image at the top with category overlay */}
       <div className="w-full mb-2 relative">
         <div className="relative w-full h-[180px]">
@@ -32,7 +34,7 @@ export function BlogCard({ blog }) {
             sizes="(max-width: 768px) 100vw, 350px"
             priority={false}
           />
-          
+
           {/* Category overlay on top-right corner */}
           {blog.category && (
             <div className="absolute top-2 right-2">
@@ -69,11 +71,8 @@ export function BlogCard({ blog }) {
 
         {/* Read More button at bottom */}
         <div className="mt-auto">
-          <Link
-            href={blog.link}
-            className="block w-full px-4 py-2 bg-black dark:bg-white dark:text-black text-white text-sm font-medium rounded-xl text-center hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors"
-          >
-            Read More →
+          <Link href={blog.link}>
+            <InteractiveHoverButton> Read More</InteractiveHoverButton>
           </Link>
         </div>
       </div>
