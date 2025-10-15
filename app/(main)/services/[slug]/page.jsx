@@ -1,14 +1,11 @@
 import ServiceLayout from "@/components/layouts/ServiceLayout";
 import { notFound } from "next/navigation";
 
-// Helper: SSR-safe absolute API url for Vercel/local
+// Always use the same hardcoded base URL
+const BASE_URL = "https://saasential-cloud.vercel.app";
+
 function getApiUrl(slug) {
-  if (process.env.NODE_ENV === "development") {
-    return `http://localhost:3000/api/services/${slug}`;
-  }
-  // Vercel sets VERCEL_URL automatically in prod
-  const vercelUrl = process.env.VERCEL_URL || "saasential-cloud.vercel.app";
-  return `https://${vercelUrl}/api/services/${slug}`;
+  return `${BASE_URL}/api/services/${slug}`;
 }
 
 export async function generateMetadata({ params }) {
@@ -46,7 +43,6 @@ export default async function ServicePage({ params }) {
   const service = await res.json();
   if (!service) return notFound();
 
-  // Defensive checks for service props
   const heroData = {
     title: service.title || service.name || "",
     description: service.subtitle || "",
