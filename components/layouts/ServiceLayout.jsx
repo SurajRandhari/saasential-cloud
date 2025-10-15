@@ -6,6 +6,7 @@ import FadeOverlay from "@/components/ui/FadeOverlay";
 import Image from "next/image";
 import { GradientButton } from "../common/my-button/GradientButton";
 import Link from "next/link";
+import { LeadFormDialog } from "../common/LeadFormDialog";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -152,15 +153,19 @@ const ServiceLayout = ({
                           ))}
                         </ul>
                       )}
-                      <Link
-                        href={`/services/${heroData?.slug || ""}/${
-                          service.slug
-                        }`}
-                      >
-                        <GradientButton className="mt-4">
-                          Read More
-                        </GradientButton>
-                      </Link>
+                      <div className="flex flex-col gap-3 mt-4 ">
+                        <Link
+                          href={`/services/${heroData?.slug || ""}/${
+                            service.slug
+                          }`}
+                        >
+                          <p className="text-blue-400 underline-offset-2 hover:underline">
+                            {" "}
+                            Read More
+                          </p>
+                        </Link>
+                        <LeadFormDialog buttonLabel="Get Started" />
+                      </div>
                     </div>
 
                     {/* Image - Right Side */}
@@ -225,15 +230,19 @@ const ServiceLayout = ({
                           ))}
                         </ul>
                       )}
-                      <Link
-                        href={`/services/${heroData?.slug || ""}/${
-                          service.slug
-                        }`}
-                      >
-                        <GradientButton className="mt-4">
-                          Read More
-                        </GradientButton>
-                      </Link>
+                      <div className="flex flex-col gap-3 mt-4 ">
+                        <Link
+                          href={`/services/${heroData?.slug || ""}/${
+                            service.slug
+                          }`}
+                        >
+                          <p className="text-blue-400 underline-offset-2 hover:underline">
+                            {" "}
+                            Read More
+                          </p>
+                        </Link>
+                        <LeadFormDialog buttonLabel="Get Started" />
+                      </div>
                     </div>
                   </>
                 )}
