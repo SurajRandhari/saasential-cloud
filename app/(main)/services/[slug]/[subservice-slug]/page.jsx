@@ -1,15 +1,12 @@
 import { notFound } from "next/navigation";
 
+// Use static base URL for all environments
+const BASE_URL = "https://saasential-cloud.vercel.app";
+
 export default async function SubservicePage({ params }) {
   const { slug, "subservice-slug": subserviceSlug } = await params;
-  console.log("DEBUG params:", slug, subserviceSlug);
 
-  const baseUrl =
-    process.env.NODE_ENV === "development"
-      ? "http://localhost:3000"
-      : "https://your-domain.com"; // <= change this to your real domain in prod
-
-  const resp = await fetch(`${baseUrl}/api/services/${slug}`, { cache: "no-store" });
+  const resp = await fetch(`${BASE_URL}/api/services/${slug}`, { cache: "no-store" });
   if (!resp.ok) return notFound();
   const service = await resp.json();
 
