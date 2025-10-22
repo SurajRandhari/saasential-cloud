@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 
@@ -14,35 +14,29 @@ const shuffleArray = (array) => {
   return shuffled;
 };
 
-// Utility: Distribute logos evenly
+// Utility: Distribute logos evenly across columns
 const distributeLogos = (allLogos, columnCount) => {
   const shuffled = shuffleArray(allLogos);
   const columns = Array.from({ length: columnCount }, () => []);
-  
   shuffled.forEach((logo, index) => {
     columns[index % columnCount].push(logo);
   });
-  
   return columns;
 };
 
-// Optimized LogoColumn - No blur, simpler animations
+// Optimized LogoColumn component
 const LogoColumn = React.memo(({ logos, columnIndex }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const cycleInterval = 2500; // 2.5 seconds per logo
 
   useEffect(() => {
-    // Stagger start time per column
     const startDelay = columnIndex * 400;
-    
     const timer = setTimeout(() => {
       const interval = setInterval(() => {
         setCurrentIndex((prev) => (prev + 1) % logos.length);
       }, cycleInterval);
-      
       return () => clearInterval(interval);
     }, startDelay);
-
     return () => clearTimeout(timer);
   }, [logos.length, columnIndex, cycleInterval]);
 
@@ -50,7 +44,8 @@ const LogoColumn = React.memo(({ logos, columnIndex }) => {
 
   return (
     <motion.div
-      className="w-24 h-14 md:w-48 md:h-24 overflow-hidden relative flex items-center justify-center rounded-lg border border-gray-100"
+      // 🔥 Increased image container size
+      className="w-40 h-24 md:w-72 md:h-40 overflow-hidden relative flex items-center justify-center rounded-xl border border-gray-200 bg-white shadow-md"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{
@@ -62,33 +57,26 @@ const LogoColumn = React.memo(({ logos, columnIndex }) => {
       <AnimatePresence mode="wait">
         <motion.div
           key={`${currentLogo.id}-${currentIndex}`}
-          className="absolute inset-0 flex items-center justify-center p-4"
+          className="absolute inset-0 flex items-center justify-center p-6"
           initial={{ opacity: 0, y: 10 }}
-          animate={{ 
-            opacity: 1, 
+          animate={{
+            opacity: 1,
             y: 0,
-            transition: {
-              duration: 0.4,
-              ease: "easeOut"
-            }
+            transition: { duration: 0.4, ease: "easeOut" },
           }}
-          exit={{ 
-            opacity: 0, 
+          exit={{
+            opacity: 0,
             y: -10,
-            transition: {
-              duration: 0.3,
-              ease: "easeIn"
-            }
+            transition: { duration: 0.3, ease: "easeIn" },
           }}
         >
           <Image
             src={currentLogo.src}
             alt={currentLogo.name}
-            width={128}
-            height={128}
+            width={500}
+            height={500}
             className="w-full h-full object-contain"
             loading={columnIndex === 0 && currentIndex === 0 ? "eager" : "lazy"}
-            sizes="(max-width: 768px) 96px, 160px"
           />
         </motion.div>
       </AnimatePresence>
@@ -98,9 +86,8 @@ const LogoColumn = React.memo(({ logos, columnIndex }) => {
 
 LogoColumn.displayName = "LogoColumn";
 
-// Main LogoCarousel component - Optimized
+// 🌟 Main LogoCarousel Component
 export default function LogoCarousel({ columnCount = 3 }) {
-  // Memoized logos array
   const allLogos = useMemo(
     () => [
       { name: "Apple", id: 1, src: "/images/clients-logos/1.png" },
@@ -121,14 +108,13 @@ export default function LogoCarousel({ columnCount = 3 }) {
     []
   );
 
-  // Distribute logos once on mount
   const logoColumns = useMemo(
     () => distributeLogos(allLogos, columnCount),
     [allLogos, columnCount]
   );
 
   return (
-    <div className="flex gap-6 md:gap-8 justify-center items-center">
+    <div className="flex flex-wrap justify-center items-center gap-8 md:gap-10">
       {logoColumns.map((logos, index) => (
         <LogoColumn key={`column-${index}`} logos={logos} columnIndex={index} />
       ))}
