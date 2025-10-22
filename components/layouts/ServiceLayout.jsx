@@ -164,7 +164,8 @@ const ServiceLayout = ({
                             Read More
                           </p>
                         </Link>
-                        <LeadFormDialog buttonLabel="Get Started" />
+                        {/* <LeadFormDialog buttonLabel="Get Started" /> */}
+                        <LeadFormDialog buttonLabel="Get Started" servicesData={servicesData} />
                       </div>
                     </div>
 
@@ -241,7 +242,8 @@ const ServiceLayout = ({
                             Read More
                           </p>
                         </Link>
-                        <LeadFormDialog buttonLabel="Get Started" />
+                        {/* <LeadFormDialog buttonLabel="Get Started" /> */}
+                        <LeadFormDialog buttonLabel="Get Started" servicesData={servicesData} />
                       </div>
                     </div>
                   </>

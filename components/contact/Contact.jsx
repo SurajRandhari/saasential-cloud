@@ -15,7 +15,7 @@ export default function Contact() {
       <div className="relative w-full h-[320px] md:h-[420px] overflow-hidden flex items-center justify-center ">
         <video
           className="absolute inset-0 w-full h-full object-cover"
-          src="/videos/contact.webm"
+          src="/images/contact/contact_bnr.webm"
           autoPlay
           loop
           muted
