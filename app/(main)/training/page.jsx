@@ -372,7 +372,7 @@ export default function TrainingPage() {
 
   // ---- Main Page Render ----
   return (
-    <div className="min-h-screen bg-gray-100 w-full my-25">
+    <div className="min-h-screen bg-white w-full my-25">
       <h1 className="text-3xl font-bold text-teal-800 mt-6 mb-4 text-center">
         Search Trainings
       </h1>
