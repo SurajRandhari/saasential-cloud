@@ -9,8 +9,6 @@ import { FaChartBar, FaRegClock } from "react-icons/fa";
 import Link from "next/link";
 import { trainings } from "@/data/training/trainings";
 
-
-
 // Industry filter options (with suboptions and counts)
 const industriesOptions = [
   {
@@ -189,7 +187,7 @@ export default function TrainingPage() {
         {/* INDUSTRIES FILTER (auto dropdown on click/check) */}
         <div className="rounded-t-xl overflow-hidden mb-5 shadow">
           <button
-            className="bg-teal-700 w-full px-5 py-4 flex items-center justify-between focus:outline-none"
+            className="bg-[#023047] w-full px-5 py-2 flex items-center justify-between focus:outline-none"
             onClick={() => setShowIndustries(!showIndustries)}
           >
             <span className="text-white font-semibold text-lg">Industries</span>
@@ -252,7 +250,7 @@ export default function TrainingPage() {
         {/* TRAINING TYPE */}
         <div className="rounded-t-xl overflow-hidden mb-5 shadow">
           <button
-            className="bg-teal-700 w-full px-5 py-4 flex items-center justify-between focus:outline-none"
+            className="bg-[#023047] w-full px-5 py-2 flex items-center justify-between focus:outline-none"
             onClick={() => setShowTrainingType(!showTrainingType)}
           >
             <span className="text-white font-semibold text-lg">
@@ -286,7 +284,7 @@ export default function TrainingPage() {
         {/* LEVELS FILTER */}
         <div className="rounded-t-xl overflow-hidden mb-5 shadow">
           <button
-            className="bg-teal-700 w-full px-5 py-4 flex items-center justify-between focus:outline-none"
+            className="bg-[#023047] w-full px-5 py-2 flex items-center justify-between focus:outline-none"
             onClick={() => setShowLevels(!showLevels)}
           >
             <span className="text-white font-semibold text-lg">Levels</span>
@@ -318,7 +316,7 @@ export default function TrainingPage() {
         {/* SPEAKER FILTER */}
         <div className="rounded-t-xl overflow-hidden mb-5 shadow">
           <button
-            className="bg-teal-700 w-full px-5 py-4 flex items-center justify-between focus:outline-none"
+            className="bg-[#023047] w-full px-5 py-2 flex items-center justify-between focus:outline-none"
             onClick={() => setShowSpeaker(!showSpeaker)}
           >
             <span className="text-white font-semibold text-lg">Speaker</span>
@@ -377,7 +375,7 @@ export default function TrainingPage() {
         Search Trainings
       </h1>
       {/* Search Bar */}
-      <div className="max-w-7xl mx-auto px-2">
+      <div className="max-w-[1600px] w-full mx-auto pt-4 px-4">
         <div className="bg-white rounded-xl shadow-md py-6 px-4 flex flex-col md:flex-row md:items-end md:space-x-4 space-y-4 md:space-y-0 border border-gray-300 mb-8">
           <div className="flex-1 min-w-[180px]">
             <label className="block text-sm font-medium text-gray-600 mb-1">
@@ -388,7 +386,7 @@ export default function TrainingPage() {
               onChange={(e) =>
                 setIndustry(e.target.value ? [e.target.value] : [])
               }
-              className="w-full border-b border-teal-700 bg-white py-2 pl-0 pr-3 focus:outline-none text-gray-800 font-semibold text-base"
+              className="w-full border-b border-[#023047] bg-white py-2 pl-0 pr-3 focus:outline-none text-gray-800 font-semibold text-base"
             >
               <option value="">All</option>
               {industriesOptions.map((opt) => (
@@ -405,7 +403,7 @@ export default function TrainingPage() {
             <input
               type="text"
               placeholder="What do you want to learn?"
-              className="w-full border-b border-teal-700 py-2 pr-3 bg-white font-normal text-base focus:outline-none"
+              className="w-full border-b border-[#023047] py-2 pr-3 bg-white font-normal text-base focus:outline-none"
               value={keyword}
               onChange={(e) => setKeyword(e.target.value)}
             />
@@ -418,7 +416,7 @@ export default function TrainingPage() {
               type="date"
               value={fromDate}
               onChange={(e) => setFromDate(e.target.value)}
-              className="w-full border-b border-teal-700 py-2 pr-3 bg-white focus:outline-none"
+              className="w-full border-b border-[#023047] py-2 pr-3 bg-white focus:outline-none"
             />
           </div>
           <div className="flex-1 min-w-[140px]">
@@ -429,11 +427,11 @@ export default function TrainingPage() {
               type="date"
               value={toDate}
               onChange={(e) => setToDate(e.target.value)}
-              className="w-full border-b border-teal-700 py-2 pr-3 bg-white focus:outline-none"
+              className="w-full border-b border-[#023047] py-2 pr-3 bg-white focus:outline-none"
             />
           </div>
           <div className="flex items-end pb-1">
-            <Button className="bg-orange-400 hover:bg-orange-500 text-white font-bold px-7 py-2 rounded flex items-center text-lg space-x-2 shadow-md">
+            <Button className="bg-gradient-to-r from-white to-[#FCA211] hover:from-[#FCA211] hover:to-white text-[#023047] font-bold px-7 py-2 rounded flex items-center text-lg space-x-2 shadow-md  transition-all">
               <FaSearch />
               <span>Search</span>
             </Button>
@@ -441,9 +439,9 @@ export default function TrainingPage() {
         </div>
       </div>
       {/* Main layout */}
-      <div className="max-w-7xl mx-auto flex px-2 gap-8">
+      <div className="max-w-[1600px] w-full mx-auto flex px-2 gap-8">
         {/* Sidebar */}
-        <aside className="w-[320px] bg-white border-2 border-gray-300 rounded-xl shadow-lg py-6 px-4 flex flex-col min-h-[600px]">
+        <aside className="w-[320px] sticky top-8 h-fit self-start bg-white border-2 border-gray-300 rounded-xl shadow-lg py-6 px-4 flex flex-col min-h-[600px]">
           <SidebarFilter />
         </aside>
         {/* Trainings list: one per row */}
@@ -458,6 +456,7 @@ export default function TrainingPage() {
               </div>
             )}
           </div>
+
           <div className="flex flex-col gap-6">
             {filteredTrainings.length === 0 ? (
               <div className="text-gray-500 text-center py-10">
@@ -477,31 +476,54 @@ export default function TrainingPage() {
                       className="object-cover w-full h-full min-h-[180px]"
                     />
                     {/* TAG BADGE */}
-                    <span className="absolute top-3 left-3 bg-teal-600 text-white px-3 py-1 rounded-md text-xs font-semibold shadow">
+                    <span className="absolute top-3 left-3 bg-[#023047] text-white px-3 py-1 rounded-md text-xs font-semibold shadow">
                       {t.type}
                     </span>
                   </div>
                   {/* CONTENT SECTION */}
-                  <div className="flex-1 flex flex-col justify-between p-5 bg-white rounded-r-xl">
+                  <div className="flex-1 flex flex-col justify-between p-6 bg-white rounded-r-xl">
                     <div>
-                      <div className="flex items-center justify-between mb-1">
-                        <h3 className="font-semibold text-lg text-teal-700">
+                      <div className="flex items-center justify-between mb-2">
+                        <h3 className="font-semibold text-lg text-[#023047]">
                           {t.title}
                         </h3>
                         <span className="text-xs text-gray-400">
                           {new Date(t.date).toLocaleDateString()}
                         </span>
                       </div>
-                      <p className="text-sm text-gray-800 mb-2">
+
+                      <p className="text-sm text-gray-800 mb-3">
                         {t.description}
                       </p>
-                      <div className="flex flex-wrap gap-x-4 gap-y-2 mt-2 text-xs text-gray-500 items-center">
+                      {/* META */}
+                      <div className="flex flex-wrap gap-x-6 gap-y-2 mt-3 text-xs text-gray-600 items-center">
+                        {/* SPEAKER PROFILE FIRST */}
                         <span className="flex items-center gap-2">
-                          <FaChartBar className="mr-1 text-teal-600" />
+                          <img
+                            src="https://images.pexels.com/photos/34433260/pexels-photo-34433260.jpeg"
+                            alt={t.speaker}
+                            className="w-8 h-8 rounded-full object-cover border-2 border-[#023047]"
+                            onError={(e) => {
+                              e.target.src = "https://via.placeholder.com/40";
+                            }}
+                          />
+                          <Link
+                            href={`/speakers/${encodeURIComponent(
+                              t.speaker.replace(/ /g, "-").toLowerCase()
+                            )}`}
+                            className="font-semibold text-[#023047] text-sm hover:underline"
+                            prefetch={false}
+                          >
+                            {t.speaker}
+                          </Link>
+                        </span>
+                        {/* Meta fields */}
+                        <span className="flex items-center gap-1">
+                          <FaChartBar className="text-[#023047]" />
                           <b>Level:</b>&nbsp;{t.level}
                         </span>
-                        <span className="flex items-center gap-2">
-                          <FaRegClock className="ml-1 text-teal-600" />
+                        <span className="flex items-center gap-1">
+                          <FaRegClock className="text-[#023047]" />
                           <b>Duration:</b>&nbsp;{t.duration}
                         </span>
                         <span>
@@ -514,33 +536,12 @@ export default function TrainingPage() {
                         )}
                       </div>
                     </div>
-                    {/* SPEAKER SECTION */}
-                    <div className="flex items-center mt-3">
-                      <img
-                        src={
-                          "https://images.pexels.com/photos/34433260/pexels-photo-34433260.jpeg"
-                        }
-                        alt={t.speaker}
-                        className="w-10 h-10 rounded-full object-cover border-2 border-teal-500 mr-3"
-                        onError={(e) => {
-                          e.target.src = "https://via.placeholder.com/40";
-                        }}
-                      />
-                      <Link
-                        href={`/speakers/${encodeURIComponent(
-                          t.speaker.replace(/ /g, "-").toLowerCase()
-                        )}`}
-                        className="font-semibold text-gray-700 text-sm hover:underline"
-                        prefetch={false}
-                      >
-                        {t.speaker}
-                      </Link>
-                    </div>
                   </div>
                 </Card>
               ))
             )}
           </div>
+
           {/* Pagination */}
           {totalPages > 1 && (
             <div className="flex justify-center items-center mt-8 gap-2">
