@@ -51,7 +51,7 @@ export default function DesignBuildMarket() {
       </h1>
 
       <p className="mt-6 max-w-2xl mx-auto text-lg leading-relaxed text-gray-300">
-        It’s in Webandcrafts’ DNA to transform your brand into its best digital
+        It’s in Saasential DNA to transform your brand into its best digital
         self. We are driven by a customer-centric approach in creating engaging,
         interactive and immersive experiences that deliver only the best.
       </p>

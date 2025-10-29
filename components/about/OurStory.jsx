@@ -6,7 +6,7 @@ const cards = [
     description:
       "To deliver experiences that change the way your customers feel about your business",
     imageUrl:
-      "https://webandcrafts.com/_next/image?url=https%3A%2F%2Fadmin.wac.co%2Fuploads%2Fpuopose_thump_296e93fb29.png&w=1080&q=90", // Replace with your image path
+      "",
     link: "#",
   },
   {
@@ -14,7 +14,7 @@ const cards = [
     description:
       "Holistic leadership, holistic growth! A team of visionaries connected by shared commitments for a unified vision",
     imageUrl:
-      "https://webandcrafts.com/_next/image?url=https%3A%2F%2Fadmin.wac.co%2Fuploads%2FTeam_thump_fbce73b0a4.png&w=1080&q=90",
+      "",
     link: "#",
   },
   {
@@ -22,7 +22,7 @@ const cards = [
     description:
       "Our dedication is fueled by your compliments, inspiring us to push the boundaries of excellence",
     imageUrl:
-      "https://webandcrafts.com/_next/image?url=https%3A%2F%2Fadmin.wac.co%2Fuploads%2FWards_thump_e75529fc0d.png&w=1080&q=90",
+      "",
     link: "#",
   },
   {
@@ -30,7 +30,7 @@ const cards = [
     description:
       "We are one, but we are many! Transform your digital footprint with our trusted brands",
     imageUrl:
-      "https://webandcrafts.com/_next/image?url=https%3A%2F%2Fadmin.wac.co%2Fuploads%2FBrands_thump_d1e6423cf4.png&w=1080&q=90",
+      "",
     link: "#",
   },
 ];
