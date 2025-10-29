@@ -432,7 +432,7 @@ export default function TrainingPage() {
             />
           </div>
           <div className="flex items-end pb-1">
-            <Button className="bg-gradient-to-r from-white to-[#FCA211] hover:from-[#FCA211] hover:to-white text-[#023047] font-bold px-7 py-2 rounded flex items-center text-lg space-x-2 shadow-md  transition-all">
+            <Button className="bg-gradient-to-r from-white to-[#FCA211] hover:from-[#FCA211] hover:to-white text-[#023047] font-bold px-7 py-2 rounded-none flex items-center text-lg space-x-2 shadow-md  transition-all">
               <FaSearch />
               <span>Search</span>
             </Button>
@@ -477,7 +477,7 @@ export default function TrainingPage() {
                       className="object-cover w-full h-full min-h-[180px]"
                     />
                     {/* TAG BADGE */}
-                    <span className="absolute top-0 right-0 bg-[#FCA211] text-[#023047] px-3 py-2  text-xs font-semibold shadow">
+                    <span className="absolute top-0 right-0 bg-[#FCA211] text-white px-3 py-2  text-xs font-semibold shadow">
                       {t.type}
                     </span>
                   </div>
@@ -485,7 +485,7 @@ export default function TrainingPage() {
                   <div className="flex-1 flex flex-col justify-between p-6 bg-white rounded-r-xl">
                     <div>
                       <div className="flex items-center justify-between mb-2">
-                        <h3 className="font-semibold text-lg text-[#023047]">
+                        <h3 className="font-semibold text-lg text-[#FCA211]">
                           {t.title}
                         </h3>
                         <span className="text-xs text-gray-400">
@@ -512,7 +512,7 @@ export default function TrainingPage() {
                             href={`/speakers/${encodeURIComponent(
                               t.speaker.replace(/ /g, "-").toLowerCase()
                             )}`}
-                            className="font-semibold text-[#023047] text-sm hover:underline"
+                            className="font-semibold text-[#FCA211] text-sm hover:underline"
                             prefetch={false}
                           >
                             {t.speaker}
@@ -520,11 +520,11 @@ export default function TrainingPage() {
                         </span>
                         {/* Meta fields */}
                         <span className="flex items-center gap-1">
-                          <FaChartBar className="text-[#023047]" />
+                          <FaChartBar className="text-[#FCA211]" />
                           <b>Level:</b>&nbsp;{t.level}
                         </span>
                         <span className="flex items-center gap-1">
-                          <FaRegClock className="text-[#023047]" />
+                          <FaRegClock className="text-[#FCA211]" />
                           <b>Duration:</b>&nbsp;{t.duration}
                         </span>
                         <span>
