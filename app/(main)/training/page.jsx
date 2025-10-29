@@ -8,6 +8,7 @@ import { FaChevronDown } from "react-icons/fa";
 import { FaChartBar, FaRegClock } from "react-icons/fa";
 import Link from "next/link";
 import { trainings } from "@/data/training/trainings";
+import { GradientButton } from "@/components/common/my-button/GradientButton";
 
 // Industry filter options (with suboptions and counts)
 const industriesOptions = [
@@ -466,7 +467,7 @@ export default function TrainingPage() {
               filteredTrainings.map((t) => (
                 <Card
                   key={t.id}
-                  className="flex flex-row w-full min-h-[180px] shadow hover:shadow-lg transition cursor-pointer"
+                  className="flex flex-row w-full min-h-[180px] shadow hover:shadow-lg transition cursor-pointer py-0"
                 >
                   {/* IMAGE SECTION */}
                   <div className="relative w-40 h-auto flex-shrink-0 rounded-l-xl overflow-hidden bg-gray-200">
@@ -476,7 +477,7 @@ export default function TrainingPage() {
                       className="object-cover w-full h-full min-h-[180px]"
                     />
                     {/* TAG BADGE */}
-                    <span className="absolute top-3 left-3 bg-[#023047] text-white px-3 py-1 rounded-md text-xs font-semibold shadow">
+                    <span className="absolute top-0 right-0 bg-[#FCA211] text-[#023047] px-3 py-2  text-xs font-semibold shadow">
                       {t.type}
                     </span>
                   </div>
@@ -534,6 +535,10 @@ export default function TrainingPage() {
                             <b>Sub Industry:</b>&nbsp;{t.subIndustry}
                           </span>
                         )}
+                      </div>
+                      <div className="mt-4">
+
+                      <GradientButton>Enroll Now</GradientButton>
                       </div>
                     </div>
                   </div>
