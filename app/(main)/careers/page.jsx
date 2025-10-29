@@ -27,6 +27,7 @@ import {
 import { motion } from "framer-motion"; // ✅ Import Framer Motion
 import { GradientButton } from "@/components/common/my-button/GradientButton";
 import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
+import { TextGifHeadingOne } from "@/components/textGif/TextGifDemo";
 
 // Animation Variants
 const containerVariants = {
@@ -157,9 +158,19 @@ export default function Careers() {
   return (
     <div className="w-full h-full flex flex-col">
       {/* Banner */}
-      <section className="banner w-full h-[300px] bg-blue-400 flex items-center justify-center">
-        <h1 className="text-8xl text-white">Careers</h1>
-      </section>
+      <div className="relative w-full h-[350px] md:h-[420px] overflow-hidden flex items-center justify-center">
+           <video
+             className="absolute inset-0 w-full h-full object-cover opacity-50" // ✅ opacity added
+             src="/images/career/career_bnr.webm"
+             autoPlay
+             loop
+             muted
+             playsInline
+           />
+           <div className="mx-auto px-4 py-16 text-center">
+               <TextGifHeadingOne fontSize="6rem">Career</TextGifHeadingOne>
+             </div>
+         </div>
 
       {/* Job Openings Accordion */}
       <section className="w-full max-w-4xl mx-auto py-10">
