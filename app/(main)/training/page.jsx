@@ -9,6 +9,7 @@ import { FaChartBar, FaRegClock } from "react-icons/fa";
 import Link from "next/link";
 import { trainings } from "@/data/training/trainings";
 import { GradientButton } from "@/components/common/my-button/GradientButton";
+import { Checkbox } from "@/components/ui/checkbox";
 
 // Industry filter options (with suboptions and counts)
 const industriesOptions = [
@@ -182,192 +183,183 @@ export default function TrainingPage() {
   );
 
   // --- Sidebar filter
-  function SidebarFilter() {
-    return (
-      <div className="w-full ">
-        {/* INDUSTRIES FILTER (auto dropdown on click/check) */}
-        <div className="rounded-t-xl overflow-hidden mb-5 shadow">
-          <button
-            className="bg-[#023047] w-full px-5 py-2 flex items-center justify-between focus:outline-none"
-            onClick={() => setShowIndustries(!showIndustries)}
-          >
-            <span className="text-white font-semibold text-lg">Industries</span>
-          </button>
-          {showIndustries && (
-            <div className="bg-white p-3 max-h-78 overflow-y-auto">
-              {industriesOptions.map((opt) => (
-                <div key={opt.label}>
-                  <div
-                    className="flex items-center gap-2 py-2 text-base font-medium cursor-pointer select-none"
-                    onClick={() => handleParentClick(opt)}
-                  >
-                    <input
-                      type="checkbox"
-                      checked={industry.includes(opt.label)}
-                      onChange={() => handleParentCheck(opt)}
-                      className="w-5 h-5"
-                      onClick={(e) => e.stopPropagation()}
-                    />
-                    <span>
-                      {opt.label}
-                      <span className="text-gray-500 font-normal text-base">
-                        {" "}
-                        ({opt.count})
-                      </span>
-                    </span>
-                  </div>
-                  {/* Suboptions dropdown auto-opens */}
-                  {opt.subs.length > 0 && openIndustrySubs[opt.label] && (
-                    <div className="ml-7 pl-2 border-l border-gray-200 max-h-78 overflow-y-auto">
-                      {opt.subs.map((sub) => (
-                        <label
-                          key={sub.label}
-                          className="flex items-center gap-2 py-1 text-[15px] text-gray-700"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <input
-                            type="checkbox"
-                            checked={subIndustry.includes(sub.label)}
-                            onChange={() =>
-                              toggle(subIndustry, setSubIndustry, sub.label)
-                            }
-                            className="w-4 h-4"
-                          />
-                          <span>
-                            {sub.label}
-                            <span className="text-gray-400 font-normal">
-                              ({sub.count})
-                            </span>
-                          </span>
-                        </label>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-        {/* TRAINING TYPE */}
-        <div className="rounded-t-xl overflow-hidden mb-5 shadow">
-          <button
-            className="bg-[#023047] w-full px-5 py-2 flex items-center justify-between focus:outline-none"
-            onClick={() => setShowTrainingType(!showTrainingType)}
-          >
-            <span className="text-white font-semibold text-lg">
-              Training Type
-            </span>
-          </button>
-          {showTrainingType && (
-            <div className="bg-white p-3 max-h-78 overflow-y-auto">
-              {trainingTypes.map((opt) => (
-                <label
-                  key={opt.label}
-                  className="flex items-center gap-2 py-2 text-base font-medium"
-                >
-                  <input
-                    type="checkbox"
-                    checked={selectedType.includes(opt.label)}
-                    onChange={() => toggle(selectedType, setType, opt.label)}
-                    className="w-5 h-5"
-                  />
-                  <span>
-                    {opt.label}{" "}
-                    <span className="text-gray-500 font-normal text-base">
-                      ({opt.count})
-                    </span>
-                  </span>
-                </label>
-              ))}
-            </div>
-          )}
-        </div>
-        {/* LEVELS FILTER */}
-        <div className="rounded-t-xl overflow-hidden mb-5 shadow">
-          <button
-            className="bg-[#023047] w-full px-5 py-2 flex items-center justify-between focus:outline-none"
-            onClick={() => setShowLevels(!showLevels)}
-          >
-            <span className="text-white font-semibold text-lg">Levels</span>
-          </button>
-          {showLevels && (
-            <div className="bg-white p-3 max-h-78 overflow-y-auto">
-              {levels.map((opt) => (
-                <label
-                  key={opt.label}
-                  className="flex items-center gap-2 py-2 text-base font-medium"
-                >
-                  <input
-                    type="checkbox"
-                    checked={selectedLevel.includes(opt.label)}
-                    onChange={() => toggle(selectedLevel, setLevel, opt.label)}
-                    className="w-5 h-5"
-                  />
-                  <span>
-                    {opt.label}{" "}
-                    <span className="text-gray-500 font-normal text-base">
-                      ({opt.count})
-                    </span>
-                  </span>
-                </label>
-              ))}
-            </div>
-          )}
-        </div>
-        {/* SPEAKER FILTER */}
-        <div className="rounded-t-xl overflow-hidden mb-5 shadow">
-          <button
-            className="bg-[#023047] w-full px-5 py-2 flex items-center justify-between focus:outline-none"
-            onClick={() => setShowSpeaker(!showSpeaker)}
-          >
-            <span className="text-white font-semibold text-lg">Speaker</span>
-          </button>
-          {showSpeaker && (
-            <div className="bg-white p-3 max-h-48 overflow-y-auto">
-              {speakers.map((opt) => (
-                <label
-                  key={opt.label}
-                  className="flex items-center gap-2 py-2 text-base font-medium"
-                >
-                  <input
-                    type="checkbox"
-                    checked={selectedSpeaker.includes(opt.label)}
-                    onChange={() =>
-                      toggle(selectedSpeaker, setSelectedSpeaker, opt.label)
-                    }
-                    className="w-5 h-5"
-                  />
-                  <span>
-                    {opt.label}{" "}
-                    <span className="text-gray-500 font-normal text-base">
-                      ({opt.count})
-                    </span>
-                  </span>
-                </label>
-              ))}
-            </div>
-          )}
-        </div>
-        <Button
-          variant="secondary"
-          className="my-4 w-full"
-          onClick={() => {
-            setIndustry([]);
-            setSubIndustry([]);
-            setType([]);
-            setLevel([]);
-            setSelectedSpeaker([]);
-            setKeyword("");
-            setFromDate("");
-            setToDate("");
-            setPage(1);
-          }}
+
+function SidebarFilter() {
+  return (
+    <div className="w-full">
+      {/* INDUSTRIES FILTER */}
+      <div className="rounded-t-xl overflow-hidden mb-5 shadow">
+        <button
+          className="bg-[#023047] w-full px-5 py-2 flex items-center justify-between focus:outline-none"
+          onClick={() => setShowIndustries(!showIndustries)}
         >
-          Reset Filters
-        </Button>
+          <span className="text-white font-semibold text-lg">Industries</span>
+        </button>
+        {showIndustries && (
+          <div className="bg-white p-3 max-h-78 overflow-y-auto">
+            {industriesOptions.map((opt) => (
+              <div key={opt.label}>
+                <div
+                  className="flex items-center gap-2 py-2 text-base font-medium cursor-pointer select-none"
+                  onClick={() => handleParentClick(opt)}
+                >
+                  <Checkbox
+                    checked={industry.includes(opt.label)}
+                    onCheckedChange={() => handleParentCheck(opt)}
+                    className="w-5 h-5"
+                    onClick={e => e.stopPropagation()}
+                  />
+                  <span>
+                    {opt.label}
+                    <span className="text-gray-500 font-normal text-base">
+                      {" "}({opt.count})
+                    </span>
+                  </span>
+                </div>
+                {/* Suboptions dropdown auto-opens */}
+                {opt.subs.length > 0 && openIndustrySubs[opt.label] && (
+                  <div className="ml-7 pl-2 border-l border-gray-200 max-h-78 overflow-y-auto">
+                    {opt.subs.map((sub) => (
+                      <label
+                        key={sub.label}
+                        className="flex items-center gap-2 py-1 text-[15px] text-gray-700"
+                        onClick={e => e.stopPropagation()}
+                      >
+                        <Checkbox
+                          checked={subIndustry.includes(sub.label)}
+                          onCheckedChange={() => toggle(subIndustry, setSubIndustry, sub.label)}
+                          className="w-4 h-4"
+                        />
+                        <span>
+                          {sub.label}
+                          <span className="text-gray-400 font-normal">
+                            ({sub.count})
+                          </span>
+                        </span>
+                      </label>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
-    );
-  }
+      {/* TRAINING TYPE */}
+      <div className="rounded-t-xl overflow-hidden mb-5 shadow">
+        <button
+          className="bg-[#023047] w-full px-5 py-2 flex items-center justify-between focus:outline-none"
+          onClick={() => setShowTrainingType(!showTrainingType)}
+        >
+          <span className="text-white font-semibold text-lg">
+            Training Type
+          </span>
+        </button>
+        {showTrainingType && (
+          <div className="bg-white p-3 max-h-78 overflow-y-auto">
+            {trainingTypes.map((opt) => (
+              <label
+                key={opt.label}
+                className="flex items-center gap-2 py-2 text-base font-medium"
+              >
+                <Checkbox
+                  checked={selectedType.includes(opt.label)}
+                  onCheckedChange={() => toggle(selectedType, setType, opt.label)}
+                  className="w-5 h-5"
+                />
+                <span>
+                  {opt.label}
+                  <span className="text-gray-500 font-normal text-base">
+                    {" "}({opt.count})
+                  </span>
+                </span>
+              </label>
+            ))}
+          </div>
+        )}
+      </div>
+      {/* LEVELS FILTER */}
+      <div className="rounded-t-xl overflow-hidden mb-5 shadow">
+        <button
+          className="bg-[#023047] w-full px-5 py-2 flex items-center justify-between focus:outline-none"
+          onClick={() => setShowLevels(!showLevels)}
+        >
+          <span className="text-white font-semibold text-lg">Levels</span>
+        </button>
+        {showLevels && (
+          <div className="bg-white p-3 max-h-78 overflow-y-auto">
+            {levels.map((opt) => (
+              <label
+                key={opt.label}
+                className="flex items-center gap-2 py-2 text-base font-medium"
+              >
+                <Checkbox
+                  checked={selectedLevel.includes(opt.label)}
+                  onCheckedChange={() => toggle(selectedLevel, setLevel, opt.label)}
+                  className="w-5 h-5"
+                />
+                <span>
+                  {opt.label}
+                  <span className="text-gray-500 font-normal text-base">
+                    {" "}({opt.count})
+                  </span>
+                </span>
+              </label>
+            ))}
+          </div>
+        )}
+      </div>
+      {/* SPEAKER FILTER */}
+      <div className="rounded-t-xl overflow-hidden mb-5 shadow">
+        <button
+          className="bg-[#023047] w-full px-5 py-2 flex items-center justify-between focus:outline-none"
+          onClick={() => setShowSpeaker(!showSpeaker)}
+        >
+          <span className="text-white font-semibold text-lg">Speaker</span>
+        </button>
+        {showSpeaker && (
+          <div className="bg-white p-3 max-h-78 overflow-y-auto">
+            {speakers.map((opt) => (
+              <label
+                key={opt.label}
+                className="flex items-center gap-2 py-2 text-base font-medium"
+              >
+                <Checkbox
+                  checked={selectedSpeaker.includes(opt.label)}
+                  onCheckedChange={() => toggle(selectedSpeaker, setSelectedSpeaker, opt.label)}
+                  className="w-5 h-5"
+                />
+                <span>
+                  {opt.label}
+                  <span className="text-gray-500 font-normal text-base">
+                    {" "}({opt.count})
+                  </span>
+                </span>
+              </label>
+            ))}
+          </div>
+        )}
+      </div>
+      <Button
+        variant="secondary"
+        className="my-4 w-full"
+        onClick={() => {
+          setIndustry([]);
+          setSubIndustry([]);
+          setType([]);
+          setLevel([]);
+          setSelectedSpeaker([]);
+          setKeyword("");
+          setFromDate("");
+          setToDate("");
+          setPage(1);
+        }}
+      >
+        Reset Filters
+      </Button>
+    </div>
+  );
+}
 
   // ---- Main Page Render ----
   return (
