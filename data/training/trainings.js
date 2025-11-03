@@ -1,6 +1,7 @@
-export  const trainings = [
+export const trainings = [
   {
     id: 1,
+    slug: "uca-cash-flow-analysis",
     title: "UCA Cash Flow Analysis",
     description:
       "UCA Cash Flow Analysis and application of the analysis to better understand borrower’s cash flow: An Illustration on how Cash Flow Analysis is used to transition an Accrual Basis Financial Statement into a Statement of Cash Flow (or Cash Basis Statement) before calculating UCA cash flow.",
@@ -13,6 +14,7 @@ export  const trainings = [
   },
   {
     id: 2,
+    slug: "crash-course-in-canadian-employment",
     title: "Crash Course in Canadian Employment",
     description:
       "This webcast is creatively designed to provide you with important employment information when carrying on business north of the border. This Webinar will provide cross-border human resource and employment tips. Provide essential information to give you a solid foundation for making employment decisions when traveling or considering relocating employees to Canada.",
@@ -26,6 +28,7 @@ export  const trainings = [
   },
   {
     id: 3,
+    slug: "chatgpt-for-excel",
     title: "ChatGPT for Excel",
     description:
       "This session will introduce you to the seamless integration of ChatGPT with Excel, showing how AI can dramatically boost your spreadsheet capabilities.",
@@ -39,6 +42,7 @@ export  const trainings = [
   },
   {
     id: 4,
+    slug: "i9-audits-strengthening-your-immigration-compliance",
     title: "I-9 Audits Strengthening Your Immigration Compliance",
     description:
       "Are you confident your organization is in full compliance with Federal immigration laws, or are you at risk for being assessed costly fines, or worse, for potential violations? In an effort to control illegal immigration, in 1986 Congress passed the Immigration Reform and Control Act...",
@@ -52,6 +56,7 @@ export  const trainings = [
   },
   {
     id: 5,
+    slug: "ai-for-excel-formulas-and-functions",
     title: "AI for Excel Formulas and Functions",
     description:
       "In this webinar, we will delve into the transformative potential of AI, focusing on ChatGPT's role in revolutionizing the use of formulas in Excel. Participants will gain comprehensive insights into the following areas: AI-Enhanced Formula Creation in Excel.",
@@ -64,6 +69,7 @@ export  const trainings = [
   },
   {
     id: 6,
+    slug: "cultivating-employee-accountability-in-the-workplace",
     title: "Cultivating Employee Accountability in the Workplace",
     description:
       "A recent HRDive study of managers found that “82% of respondents admitted that they have “limited to no” ability to hold others accountable successfully. On the other hand, 91% of respondents said they would rank ‘improving the ability to hold others accountable’ as one of their top leadership development needs.",
@@ -76,6 +82,7 @@ export  const trainings = [
   },
   {
     id: 7,
+    slug: "chatgpt-made-simple-a-beginners-introduction",
     title: "ChatGPT Made Simple: A Beginner's Introduction",
     description:
       "ChatGPT is not just another tech tool—it’s a time-saving, creativity-boosting, task-simplifying digital assistant you didn’t know you needed. This webinar is your easy on-ramp to understanding and using AI in real life.",
@@ -88,6 +95,7 @@ export  const trainings = [
   },
   {
     id: 8,
+    slug: "ai-for-accounting-professionals",
     title: "AI For Accounting Professionals",
     description:
       "AI for Accounting Professionals is a must-attend session for CPAs looking to stay ahead in an industry increasingly shaped by artificial intelligence. This session explores how AI is revolutionizing accounting.",
@@ -100,6 +108,7 @@ export  const trainings = [
   },
   {
     id: 9,
+    slug: "job-safety-analysis-jsa-job-hazard-analysis",
     title: "Job Safety Analysis JSA / Job Hazard Analysis",
     description:
       "A Job Safety Analysis (JSA), also called a Job Hazard Analysis (JHA), is an effective safety risk identification and mitigation technique used to identify and mitigate the dangers of specific tasks.",
@@ -112,6 +121,7 @@ export  const trainings = [
   },
   {
     id: 10,
+    slug: "advanced-excel-techniques",
     title: "Advanced Excel Techniques",
     description:
       "This course is designed to teach learners advanced Excel techniques including pivot tables, VLOOKUP, macros, and data visualization. Perfect for professionals looking to enhance their spreadsheet skills.",
@@ -124,6 +134,7 @@ export  const trainings = [
   },
   {
     id: 11,
+    slug: "healthcare-compliance-fundamentals",
     title: "Healthcare Compliance Fundamentals",
     description:
       "Learn the fundamentals of healthcare compliance including HIPAA regulations, patient privacy, and documentation requirements. Essential for healthcare administrators and medical staff.",
@@ -136,6 +147,7 @@ export  const trainings = [
   },
   {
     id: 12,
+    slug: "food-safety-management-systems",
     title: "Food Safety Management Systems",
     description:
       "Comprehensive training on implementing and maintaining food safety management systems. Covers HACCP principles, GMP, and regulatory compliance for food industry professionals.",

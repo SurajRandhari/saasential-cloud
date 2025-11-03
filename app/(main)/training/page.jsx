@@ -184,182 +184,194 @@ export default function TrainingPage() {
 
   // --- Sidebar filter
 
-function SidebarFilter() {
-  return (
-    <div className="w-full">
-      {/* INDUSTRIES FILTER */}
-      <div className="rounded-t-xl overflow-hidden mb-5 shadow">
-        <button
-          className="bg-[#023047] w-full px-5 py-2 flex items-center justify-between focus:outline-none"
-          onClick={() => setShowIndustries(!showIndustries)}
-        >
-          <span className="text-white font-semibold text-lg">Industries</span>
-        </button>
-        {showIndustries && (
-          <div className="bg-white p-3 max-h-78 overflow-y-auto">
-            {industriesOptions.map((opt) => (
-              <div key={opt.label}>
-                <div
-                  className="flex items-center gap-2 py-2 text-base font-medium cursor-pointer select-none"
-                  onClick={() => handleParentClick(opt)}
+  function SidebarFilter() {
+    return (
+      <div className="w-full">
+        {/* INDUSTRIES FILTER */}
+        <div className="rounded-t-xl overflow-hidden mb-5 shadow">
+          <button
+            className="bg-[#023047] w-full px-5 py-2 flex items-center justify-between focus:outline-none"
+            onClick={() => setShowIndustries(!showIndustries)}
+          >
+            <span className="text-white font-semibold text-lg">Industries</span>
+          </button>
+          {showIndustries && (
+            <div className="bg-white p-3 max-h-78 overflow-y-auto">
+              {industriesOptions.map((opt) => (
+                <div key={opt.label}>
+                  <div
+                    className="flex items-center gap-2 py-2 text-base font-medium cursor-pointer select-none"
+                    onClick={() => handleParentClick(opt)}
+                  >
+                    <Checkbox
+                      checked={industry.includes(opt.label)}
+                      onCheckedChange={() => handleParentCheck(opt)}
+                      className="w-5 h-5"
+                      onClick={(e) => e.stopPropagation()}
+                    />
+                    <span>
+                      {opt.label}
+                      <span className="text-gray-500 font-normal text-base">
+                        {" "}
+                        ({opt.count})
+                      </span>
+                    </span>
+                  </div>
+                  {/* Suboptions dropdown auto-opens */}
+                  {opt.subs.length > 0 && openIndustrySubs[opt.label] && (
+                    <div className="ml-7 pl-2 border-l border-gray-200 max-h-78 overflow-y-auto">
+                      {opt.subs.map((sub) => (
+                        <label
+                          key={sub.label}
+                          className="flex items-center gap-2 py-1 text-[15px] text-gray-700"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <Checkbox
+                            checked={subIndustry.includes(sub.label)}
+                            onCheckedChange={() =>
+                              toggle(subIndustry, setSubIndustry, sub.label)
+                            }
+                            className="w-4 h-4"
+                          />
+                          <span>
+                            {sub.label}
+                            <span className="text-gray-400 font-normal">
+                              ({sub.count})
+                            </span>
+                          </span>
+                        </label>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+        {/* TRAINING TYPE */}
+        <div className="rounded-t-xl overflow-hidden mb-5 shadow">
+          <button
+            className="bg-[#023047] w-full px-5 py-2 flex items-center justify-between focus:outline-none"
+            onClick={() => setShowTrainingType(!showTrainingType)}
+          >
+            <span className="text-white font-semibold text-lg">
+              Training Type
+            </span>
+          </button>
+          {showTrainingType && (
+            <div className="bg-white p-3 max-h-78 overflow-y-auto">
+              {trainingTypes.map((opt) => (
+                <label
+                  key={opt.label}
+                  className="flex items-center gap-2 py-2 text-base font-medium"
                 >
                   <Checkbox
-                    checked={industry.includes(opt.label)}
-                    onCheckedChange={() => handleParentCheck(opt)}
+                    checked={selectedType.includes(opt.label)}
+                    onCheckedChange={() =>
+                      toggle(selectedType, setType, opt.label)
+                    }
                     className="w-5 h-5"
-                    onClick={e => e.stopPropagation()}
                   />
                   <span>
                     {opt.label}
                     <span className="text-gray-500 font-normal text-base">
-                      {" "}({opt.count})
+                      {" "}
+                      ({opt.count})
                     </span>
                   </span>
-                </div>
-                {/* Suboptions dropdown auto-opens */}
-                {opt.subs.length > 0 && openIndustrySubs[opt.label] && (
-                  <div className="ml-7 pl-2 border-l border-gray-200 max-h-78 overflow-y-auto">
-                    {opt.subs.map((sub) => (
-                      <label
-                        key={sub.label}
-                        className="flex items-center gap-2 py-1 text-[15px] text-gray-700"
-                        onClick={e => e.stopPropagation()}
-                      >
-                        <Checkbox
-                          checked={subIndustry.includes(sub.label)}
-                          onCheckedChange={() => toggle(subIndustry, setSubIndustry, sub.label)}
-                          className="w-4 h-4"
-                        />
-                        <span>
-                          {sub.label}
-                          <span className="text-gray-400 font-normal">
-                            ({sub.count})
-                          </span>
-                        </span>
-                      </label>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-      {/* TRAINING TYPE */}
-      <div className="rounded-t-xl overflow-hidden mb-5 shadow">
-        <button
-          className="bg-[#023047] w-full px-5 py-2 flex items-center justify-between focus:outline-none"
-          onClick={() => setShowTrainingType(!showTrainingType)}
-        >
-          <span className="text-white font-semibold text-lg">
-            Training Type
-          </span>
-        </button>
-        {showTrainingType && (
-          <div className="bg-white p-3 max-h-78 overflow-y-auto">
-            {trainingTypes.map((opt) => (
-              <label
-                key={opt.label}
-                className="flex items-center gap-2 py-2 text-base font-medium"
-              >
-                <Checkbox
-                  checked={selectedType.includes(opt.label)}
-                  onCheckedChange={() => toggle(selectedType, setType, opt.label)}
-                  className="w-5 h-5"
-                />
-                <span>
-                  {opt.label}
-                  <span className="text-gray-500 font-normal text-base">
-                    {" "}({opt.count})
+                </label>
+              ))}
+            </div>
+          )}
+        </div>
+        {/* LEVELS FILTER */}
+        <div className="rounded-t-xl overflow-hidden mb-5 shadow">
+          <button
+            className="bg-[#023047] w-full px-5 py-2 flex items-center justify-between focus:outline-none"
+            onClick={() => setShowLevels(!showLevels)}
+          >
+            <span className="text-white font-semibold text-lg">Levels</span>
+          </button>
+          {showLevels && (
+            <div className="bg-white p-3 max-h-78 overflow-y-auto">
+              {levels.map((opt) => (
+                <label
+                  key={opt.label}
+                  className="flex items-center gap-2 py-2 text-base font-medium"
+                >
+                  <Checkbox
+                    checked={selectedLevel.includes(opt.label)}
+                    onCheckedChange={() =>
+                      toggle(selectedLevel, setLevel, opt.label)
+                    }
+                    className="w-5 h-5"
+                  />
+                  <span>
+                    {opt.label}
+                    <span className="text-gray-500 font-normal text-base">
+                      {" "}
+                      ({opt.count})
+                    </span>
                   </span>
-                </span>
-              </label>
-            ))}
-          </div>
-        )}
-      </div>
-      {/* LEVELS FILTER */}
-      <div className="rounded-t-xl overflow-hidden mb-5 shadow">
-        <button
-          className="bg-[#023047] w-full px-5 py-2 flex items-center justify-between focus:outline-none"
-          onClick={() => setShowLevels(!showLevels)}
-        >
-          <span className="text-white font-semibold text-lg">Levels</span>
-        </button>
-        {showLevels && (
-          <div className="bg-white p-3 max-h-78 overflow-y-auto">
-            {levels.map((opt) => (
-              <label
-                key={opt.label}
-                className="flex items-center gap-2 py-2 text-base font-medium"
-              >
-                <Checkbox
-                  checked={selectedLevel.includes(opt.label)}
-                  onCheckedChange={() => toggle(selectedLevel, setLevel, opt.label)}
-                  className="w-5 h-5"
-                />
-                <span>
-                  {opt.label}
-                  <span className="text-gray-500 font-normal text-base">
-                    {" "}({opt.count})
+                </label>
+              ))}
+            </div>
+          )}
+        </div>
+        {/* SPEAKER FILTER */}
+        <div className="rounded-t-xl overflow-hidden mb-5 shadow">
+          <button
+            className="bg-[#023047] w-full px-5 py-2 flex items-center justify-between focus:outline-none"
+            onClick={() => setShowSpeaker(!showSpeaker)}
+          >
+            <span className="text-white font-semibold text-lg">Speaker</span>
+          </button>
+          {showSpeaker && (
+            <div className="bg-white p-3 max-h-78 overflow-y-auto">
+              {speakers.map((opt) => (
+                <label
+                  key={opt.label}
+                  className="flex items-center gap-2 py-2 text-base font-medium"
+                >
+                  <Checkbox
+                    checked={selectedSpeaker.includes(opt.label)}
+                    onCheckedChange={() =>
+                      toggle(selectedSpeaker, setSelectedSpeaker, opt.label)
+                    }
+                    className="w-5 h-5"
+                  />
+                  <span>
+                    {opt.label}
+                    <span className="text-gray-500 font-normal text-base">
+                      {" "}
+                      ({opt.count})
+                    </span>
                   </span>
-                </span>
-              </label>
-            ))}
-          </div>
-        )}
-      </div>
-      {/* SPEAKER FILTER */}
-      <div className="rounded-t-xl overflow-hidden mb-5 shadow">
-        <button
-          className="bg-[#023047] w-full px-5 py-2 flex items-center justify-between focus:outline-none"
-          onClick={() => setShowSpeaker(!showSpeaker)}
+                </label>
+              ))}
+            </div>
+          )}
+        </div>
+        <Button
+          variant="secondary"
+          className="my-4 w-full"
+          onClick={() => {
+            setIndustry([]);
+            setSubIndustry([]);
+            setType([]);
+            setLevel([]);
+            setSelectedSpeaker([]);
+            setKeyword("");
+            setFromDate("");
+            setToDate("");
+            setPage(1);
+          }}
         >
-          <span className="text-white font-semibold text-lg">Speaker</span>
-        </button>
-        {showSpeaker && (
-          <div className="bg-white p-3 max-h-78 overflow-y-auto">
-            {speakers.map((opt) => (
-              <label
-                key={opt.label}
-                className="flex items-center gap-2 py-2 text-base font-medium"
-              >
-                <Checkbox
-                  checked={selectedSpeaker.includes(opt.label)}
-                  onCheckedChange={() => toggle(selectedSpeaker, setSelectedSpeaker, opt.label)}
-                  className="w-5 h-5"
-                />
-                <span>
-                  {opt.label}
-                  <span className="text-gray-500 font-normal text-base">
-                    {" "}({opt.count})
-                  </span>
-                </span>
-              </label>
-            ))}
-          </div>
-        )}
+          Reset Filters
+        </Button>
       </div>
-      <Button
-        variant="secondary"
-        className="my-4 w-full"
-        onClick={() => {
-          setIndustry([]);
-          setSubIndustry([]);
-          setType([]);
-          setLevel([]);
-          setSelectedSpeaker([]);
-          setKeyword("");
-          setFromDate("");
-          setToDate("");
-          setPage(1);
-        }}
-      >
-        Reset Filters
-      </Button>
-    </div>
-  );
-}
+    );
+  }
 
   // ---- Main Page Render ----
   return (
@@ -477,9 +489,18 @@ function SidebarFilter() {
                   <div className="flex-1 flex flex-col justify-between p-6 bg-white rounded-r-xl">
                     <div>
                       <div className="flex items-center justify-between mb-2">
-                        <h3 className="font-semibold text-lg text-[#FCA211]">
-                          {t.title}
-                        </h3>
+                        <Link
+                          href={`/training/${t.type
+                            .replace(/\s+/g, "")
+                            .toLowerCase()}/${t.id}/${t.title
+                            .replace(/\s+/g, "-")
+                            .toLowerCase()}`}
+                          className="font-semibold text-lg text-[#FCA211] hover:underline transition"
+                        >
+                          <h3 className="font-semibold text-lg text-[#FCA211]">
+                            {t.title}
+                          </h3>
+                        </Link>
                         <span className="text-xs text-gray-400">
                           {new Date(t.date).toLocaleDateString()}
                         </span>
@@ -529,8 +550,7 @@ function SidebarFilter() {
                         )}
                       </div>
                       <div className="mt-4">
-
-                      <GradientButton>Enroll Now</GradientButton>
+                        <GradientButton>Enroll Now</GradientButton>
                       </div>
                     </div>
                   </div>
